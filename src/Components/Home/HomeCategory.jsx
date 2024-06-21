@@ -1,32 +1,34 @@
-import { Container, Row } from "react-bootstrap";
+// Bootstrap
+import { Container, Row, Spinner } from "react-bootstrap";
+
+// Components
 import SubTitle from "../utilities/SubTitle";
 import CategoryCard from "../Category/CategoryCard";
-
-// import images
-import category1 from "../../assets/images/cat2.png";
-import category2 from "../../assets/images/clothe.png";
-import category3 from "../../assets/images/laptops.png";
-import category4 from "../../assets/images/mobile1.png";
-import category5 from "../../assets/images/pic.png";
+import HomeCategoryHook from "../../Logic/category/home-category-hook";
 
 const HomeCategory = () => {
+  const [categoryData, loading, color] = HomeCategoryHook();
+
   return (
     <Container>
       <SubTitle subtitle="التصنيفات" subtitlebtn="المزيد" path="allCategory" />
       <Row className="my-2 d-flex justify-content-between">
-        <CategoryCard background={"red"} img={category1} title={"إكسسوارات"} />
-        <CategoryCard background={"blue"} img={category2} title={"ملابس"} />
-        <CategoryCard background={"green"} img={category3} title={"لابتوب"} />
-        <CategoryCard
-          background={"violet"}
-          img={category4}
-          title={"موبايلات"}
-        />
-        <CategoryCard
-          background={"yellow"}
-          img={category5}
-          title={"أدوات منزلية"}
-        />
+        {loading === false ? (
+          categoryData ? (
+            categoryData.data.slice(0, 6).map((category, index) => (
+              <CategoryCard
+                key={category._id}
+                background={color[index]} // Assign random background color
+                img={category.image}
+                title={category.name}
+              />
+            ))
+          ) : (
+            <h4>لاي يوجد تصنيفات</h4>
+          )
+        ) : (
+          <Spinner className=" m-auto" animation="border" variant="primary" />
+        )}
       </Row>
     </Container>
   );

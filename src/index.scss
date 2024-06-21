@@ -1,3 +1,10 @@
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 body {
   margin: 0;
   font-family: "Almarai", sans-serif;
@@ -106,8 +113,7 @@ textarea {
 
 .allCard {
   position: relative;
-  height: 130px;
-  width: 130px;
+
 }
 
 .category-card {
@@ -123,10 +129,15 @@ textarea {
 
 .category-card-img {
   max-height: 100px;
-  max-width: 110px;
+  max-width: 100px;
   position: absolute;
-  top: 20%;
-  left: 10%;
+  top: 40%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -o-transform: translateX(-50%) translateY(-50%);
 }
 
 .category-card-text {
@@ -411,11 +422,12 @@ textarea {
   margin: 0px 1px !important;
 }
 
-.page-link:hover {
+.page-link:hover, .pagination .page-item.active .page-link {
   background-color: #272727 !important;
   color: white !important;
   border: solid 1px #272727 !important;
 }
+
 
 /* end pagination */
 

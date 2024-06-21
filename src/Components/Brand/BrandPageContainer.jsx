@@ -1,33 +1,29 @@
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import BrandCard from "./BrandCard";
 
+import PropTypes from "prop-types";
 
-
-
-// import images
-import brand1 from "../../assets/images/brand1.png"
-import brand2 from "../../assets/images/brand2.png"
-import brand3 from "../../assets/images/brand3.png"
-
-const BrandPageContainer = () => {
+const BrandPageContainer = ({ brandData, loading }) => {
   return (
     <Container className="mt-0">
-      <Row className="my-2 d-flex justify-content-between">
-        <BrandCard img={brand1} />
-        <BrandCard img={brand3} />
-        <BrandCard img={brand2} />
-        <BrandCard img={brand2} />
-        <BrandCard img={brand1} />
-        <BrandCard img={brand3} />
-        <BrandCard img={brand1} />
-        <BrandCard img={brand3} />
-        <BrandCard img={brand2} />
-        <BrandCard img={brand2} />
-        <BrandCard img={brand3} />
-        <BrandCard img={brand1} />
+      <Row className="my-2 d-flex justify-content-start">
+        {loading === false ? (
+          brandData ? (
+            brandData.map((brand) => (
+              <BrandCard key={brand._id} img={brand.image} />
+            ))
+          ) : null
+        ) : (
+          <Spinner className="m-auto" animation="border" variant="primary" />
+        )}
       </Row>
     </Container>
   );
-}
+};
 
-export default BrandPageContainer
+export default BrandPageContainer;
+
+BrandPageContainer.propTypes = {
+  brandData: PropTypes.array,
+  loading: PropTypes.bool,
+};

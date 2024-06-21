@@ -5,7 +5,7 @@ const SidebarLink = ({ to, label }) => (
   <NavLink
     to={to}
     className="admin-side-text py-3 border-bottom p-2 mx-auto text-center fs-7"
-    activeClassName="active-link"
+    activeclassname="active-link"
     style={{ textDecoration: "none" }}
   >
     {label}
