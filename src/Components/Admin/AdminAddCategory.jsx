@@ -36,7 +36,7 @@ const AdminAddCategory = () => {
                 <label htmlFor="upload-photo" style={{ cursor: "pointer" }}>
                   <img
                     src={img}
-                    alt="Category avatar"
+                    alt="Category Avatar"
                     id="category-image"
                     height="100px"
                     width="120px"

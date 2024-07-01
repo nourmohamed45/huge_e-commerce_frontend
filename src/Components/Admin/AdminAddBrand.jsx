@@ -32,8 +32,8 @@ const AdminAddBrand = () => {
                 <label htmlFor="upload-photo" style={{ cursor: "pointer" }}>
                   <img
                     src={img}
-                    alt="Category avatar"
-                    id="category-image"
+                    alt="Brand Avatar"
+                    id="brand-image"
                     height="100px"
                     width="120px"
                   />

@@ -37,7 +37,7 @@ export const getAllCategoryPage = (limit, page) => async (dispatch) => {
 };
 
 
-
+// Create a new category with image
 export const createCategory = (formData) => async (dispatch) => {
   try {
     const response = await useInsertDataWithImage(`/api/v1/categories`, formData);

@@ -21,7 +21,7 @@ export const getAllBrands = (limit) => async (dispatch) => {
 }
 
 
-// Get all brands
+// Get all brands by page
 
 export const getAllBrandsPage = (limit, page) => async (dispatch) => {
   try {

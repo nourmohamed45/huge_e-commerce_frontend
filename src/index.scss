@@ -410,6 +410,23 @@ textarea {
   height: 100%;
 }
 
+#remove_color_icon {
+  transition: all .1s linear;
+  -webkit-transition: all .1s linear;
+  -moz-transition: all .1s linear;
+  -ms-transition: all .1s linear;
+  -o-transition: all .1s linear;
+}
+
+#remove_color_icon {
+  opacity: 0;
+}
+
+#show_color_div:hover #remove_color_icon {
+  opacity: 1;
+}
+
+
 /* end gallary */
 /* end products page */
 
