@@ -1,4 +1,4 @@
-import { GET_ALL_CATEGORY, GET_ERROR, CREATE_CATEGORY } from '../type';
+import { GET_ALL_CATEGORY, GET_ERROR, CREATE_CATEGORY, GET_SPECIAL_CATEGORY } from '../type';
 
 import useGetData from '../../Hooks/useGetData';
 import { useInsertDataWithImage } from '../../Hooks/useInsertData';
@@ -36,6 +36,24 @@ export const getAllCategoryPage = (limit, page) => async (dispatch) => {
   }
 };
 
+// Get Special Categorie
+export const getSpecialCategory = (id) => async (dispatch) => {
+  try {
+    const response = await useGetData(`/api/v1/categories/${id}`);
+    dispatch({
+      type: GET_SPECIAL_CATEGORY,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: 'Error: ' + e.message,
+      loading: true,
+    });
+    throw e;
+  }
+}
 
 // Create a new category with image
 export const createCategory = (formData) => async (dispatch) => {

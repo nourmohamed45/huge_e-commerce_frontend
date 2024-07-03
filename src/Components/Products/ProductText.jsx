@@ -1,19 +1,21 @@
 import { Col, Row } from "react-bootstrap";
-
-// import images
-// import rateStar from "../../assets/images/rate.png";
+import { useParams } from "react-router-dom";
+import ViewProductDetailsHook from "../../Logic/product/view-product-details-hook";
+import { ToastContainer } from "react-toastify";
 
 const ProductText = () => {
+  const { id } = useParams();
+  const [items, , , categoryData, brandData] = ViewProductDetailsHook(id);
+
   return (
     <section>
       <Row className="mt-2">
-        <header className="cat-text">الالكترونيات :</header>
+        <header className="cat-text">{categoryData.name} :</header>
       </Row>
       <Row>
         <Col md="8">
           <article className="cat-title d-inline">
-            آيفون XR بذاكرة سعة 128 جيجابايت ويدعم تقنية 4G LTE مع تطبيق فيس
-            تايم (برودكت) أحمر{" "}
+            {items.title}{" "}
             <span
               className="cat-rate  mt-3 d-flex align-items-center gap-2"
               aria-label="Rating 4.5"
@@ -33,7 +35,7 @@ const ProductText = () => {
                 className="d-flex align-items-center"
                 style={{ height: "fit-content", marginTop: "3px" }}
               >
-                4.5
+                {items.ratingsQuantity}
               </div>
             </span>
           </article>
@@ -42,44 +44,31 @@ const ProductText = () => {
       <Row>
         <Col md="8" className="mt-4">
           <span className="cat-text d-inline">الماركة :</span>
-          <span className="barnd-text d-inline mx-1">سامسنوج </span>
+          <span className="barnd-text d-inline mx-1">{brandData.name} </span>
         </Col>
       </Row>
       <Row>
         <Col md="8" className="mt-1 d-flex">
-          <div
-            className="color ms-2 border"
-            style={{ backgroundColor: "#E52C2C" }}
-            aria-label="Color red"
-          ></div>
-          <div
-            className="color ms-2 border"
-            style={{ backgroundColor: "white" }}
-            aria-label="Color white"
-          ></div>
-          <div
-            className="color ms-2 border"
-            style={{ backgroundColor: "black" }}
-            aria-label="Color black"
-          ></div>
+          {items.availableColors
+            ? items?.availableColors?.map((color, index) => (
+                <div
+                  key={index}
+                  className="color ms-2 border"
+                  style={{ backgroundColor: color }}
+                  aria-label="Color red"
+                ></div>
+              ))
+            : null}
         </Col>
       </Row>
-
+      {/* ========== Description ========== */}
       <Row className="mt-4">
         <header className="cat-text">المواصفات :</header>
       </Row>
       <Row className="mt-2">
         <Col md="10">
           <article className="product-description d-inline">
-            يتميز بوجود بطاقة SIM مزدوجة بطاقة فعلية وبطاقة e-SIM يمكنك فتح قفل
-            هاتفك الآيفون وتسجيل الدخول إلى التطبيقات والحسابات وغيرها بسهولة،
-            وتعدّ خاصية معرَف الوجه الأسرع والأكثر أماناً للمصادقة عن طريق بصمة
-            الوجه يتميز بشريحة A12 بايونيك والتي تعد أذكى وأقوى شريحة في الهواتف
-            الذكية شكلت أكثر كاميرات العالم شهرة عصراً جديداً من التصوير
-            الفوتوغرافي حيث يعمل جهاز الاستشعار الابتكاري بخاصية ISP والمحرك
-            العصبي، ما يمكّنك من التقاط صور لم يسبق لها مثيل كاميرا بعدسة واحدة
-            تجعل الأشخاص الموجودين في الأمام في نطاق تركيز دقيق على عكس نطاق
-            الخلفية غير الواضح نظرة عامة
+            {items.description}
           </article>
         </Col>
       </Row>
@@ -89,7 +78,7 @@ const ProductText = () => {
             className="product-price d-inline px-3 py-3 border"
             aria-label="Price"
           >
-            34000 جنيه
+            {items.price} جنيه
           </p>
           <button
             className="product-cart-add px-3 py-3 d-inline mx-3"
@@ -99,6 +88,8 @@ const ProductText = () => {
           </button>
         </Col>
       </Row>
+      {/* Notification */}
+      <ToastContainer />
     </section>
   );
 };

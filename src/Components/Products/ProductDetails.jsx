@@ -2,6 +2,7 @@ import { Col, Row } from "react-bootstrap";
 import ProductGallery from "./ProductGallery";
 import ProductText from "./ProductText";
 
+
 const ProductDetails = () => {
   return (
     <div>
@@ -13,7 +14,7 @@ const ProductDetails = () => {
           <ProductGallery />
         </Col>
         <Col lg="8">
-          <ProductText />
+          <ProductText  />
         </Col>
       </Row>
     </div>
@@ -21,3 +22,4 @@ const ProductDetails = () => {
 };
 
 export default ProductDetails;
+

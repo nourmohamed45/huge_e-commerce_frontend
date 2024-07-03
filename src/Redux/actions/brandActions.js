@@ -1,4 +1,4 @@
-import { CREATE_BRAND, GET_ALL_BRANDS, GET_ERROR } from "../type";
+import { CREATE_BRAND, GET_ALL_BRANDS, GET_ERROR, GET_SPECIAL_BRAND } from "../type";
 
 import useGetData from "../../Hooks/useGetData";
 import { useInsertDataWithImage } from "../../Hooks/useInsertData";
@@ -35,6 +35,25 @@ export const getAllBrandsPage = (limit, page) => async (dispatch) => {
       type: GET_ERROR,
       payload: 'Error: ' + e.message,
     })
+  }
+}
+
+// Get special brand
+export const getSpecialBrand = (id) => async (dispatch) => {
+  try {
+    const response = await useGetData(`/api/v1/brands/${id}`);
+    dispatch({
+      type: GET_SPECIAL_BRAND,
+      payload: response,
+      loading: true,
+    })
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: 'Error: ' + e.message,
+      loading: true,
+    })
+    throw e;
   }
 }
 

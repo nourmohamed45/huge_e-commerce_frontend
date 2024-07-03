@@ -10,7 +10,6 @@ import { getAllBrands } from "../../Redux/actions/brandActions";
 import { getSubcategoriesByCategory } from "../../Redux/actions/subCategoryActions";
 import { createProduct } from "../../Redux/actions/productActions";
 
-
 // Custom hook for managing product addition logic
 const AddProductHook = () => {
   const dispatch = useDispatch();
@@ -264,6 +263,14 @@ const AddProductHook = () => {
     return errors;
   };
 
+  // Function to scroll to top
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   // Function to handle product submission
   const handleSubmitProduct = async (e) => {
     e.preventDefault();
@@ -285,6 +292,7 @@ const AddProductHook = () => {
       Object.values(validationErrors).forEach((error) => {
         notify(error, "error");
       });
+      scrollToTop(); // Scroll to top after showing validation errors
       return;
     }
 
@@ -301,9 +309,7 @@ const AddProductHook = () => {
     // ==== this format for Append Arrays ====
     // Append colors and subcategories
     if (colors.length > 0) {
-      colors.map((color) => {
-        formData.append("availableColors", color);
-      });
+      colors.map((color) => formData.append("availableColors", color));
     }
 
     if (selectedSubCategoryID.length > 0) {
@@ -352,6 +358,7 @@ const AddProductHook = () => {
 
     try {
       setLoading(true);
+
       await dispatch(createProduct(formData));
       notify("Product added successfully", "success");
       setLoading(false);
@@ -366,6 +373,7 @@ const AddProductHook = () => {
       setSelectedSubCategoryID([]);
       setSelectedImages([]);
       setColors([]);
+      scrollToTop(); // Scroll to top after showing validation errors
     } catch (error) {
       console.log(error);
       if (error?.response.status === 400) {
@@ -396,7 +404,7 @@ const AddProductHook = () => {
     handleRemoveColor,
     handleSubmitProduct,
     selectedImages,
-    productName, 
+    productName,
     setProductName,
     productDescription,
     setProductDescription,
@@ -405,7 +413,7 @@ const AddProductHook = () => {
     setPriceAfterDiscount,
     quantityAvailable,
     setQuantityAvailable,
-    colors
+    colors,
   ];
 };
 

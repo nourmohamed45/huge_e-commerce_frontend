@@ -1,7 +1,8 @@
-import { CREATE_BRAND, GET_ALL_BRANDS, GET_ERROR } from "../type";
+import { CREATE_BRAND, GET_ALL_BRANDS, GET_ERROR, GET_SPECIAL_BRAND } from "../type";
 
 const initial = {
   brands: [],
+  specialBrand: [],
   loading: true,
 };
 
@@ -18,6 +19,11 @@ const brandReducer = (state = initial, action) => {
         brands: action.payload,
         loading: false,
       };
+    case GET_SPECIAL_BRAND:
+      return {
+        specialBrand: action.payload,
+        loading: false,
+      }
     case GET_ERROR:
       return {
         ...state,

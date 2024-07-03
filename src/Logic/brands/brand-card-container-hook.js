@@ -4,20 +4,20 @@ import { getAllBrands } from "../../Redux/actions/brandActions";
 
 // for brand section in home page
 const BrandCardContainerHook = () => {
-  const bransLimit = 6;
+  const brandsLimit = 6;
 
   const dispatch = useDispatch();
 
-  // get last brand state from redux
-  const brand = useSelector((state) => state.allBrands.brands);
-  // get last loading state from redux
-  const loading = useSelector((state) => state.allBrands.loading);
+  // get last brand and loading state from redux
+  const { brands, loading } = useSelector((state) => state.allBrands);
 
   useEffect(() => {
-    dispatch(getAllBrands(bransLimit));
-  }, [dispatch]);
+    if (!brands || brands.length === 0) {
+      dispatch(getAllBrands(brandsLimit));
+    }
+  }, [dispatch, brands]);
 
-  return [brand, loading];
+  return { brands, loading };
 };
 
 export default BrandCardContainerHook;

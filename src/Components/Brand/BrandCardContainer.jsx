@@ -12,7 +12,8 @@ import BrandCardContainerHook from "../../Logic/brands/brand-card-container-hook
 
 // brand section in home page
 const BrandCardContainer = ({ subtitle, subtitlebtn }) => {
-  const [brand, loading] = BrandCardContainerHook();
+  const { brands, loading } = BrandCardContainerHook();
+
   return (
     <Container>
       <SubTitle
@@ -21,16 +22,14 @@ const BrandCardContainer = ({ subtitle, subtitlebtn }) => {
         path={"allBrand"}
       />
       <Row className="my-2 d-flex justify-content-start">
-        {loading === false ? (
-          brand.data ? (
-            brand.data.slice(0,6).map((item) => (
-              <BrandCard key={item._id} img={item.image}  />
-            ))
-          ) : (
-            <h4>لا يوجد ماركات</h4>
-          )
-        ) : (
+        {loading ? (
           <Spinner className="m-auto" animation="border" variant="primary" />
+        ) : brands && brands.data && brands.data.length > 0 ? (
+          brands.data.slice(0, 6).map((item) => (
+            <BrandCard key={item._id} img={item.image} />
+          ))
+        ) : (
+          <h4>لا يوجد ماركات</h4>
         )}
       </Row>
     </Container>
