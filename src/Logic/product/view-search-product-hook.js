@@ -1,10 +1,10 @@
 // import react hooks
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
 // import redux hooks
 import { useDispatch, useSelector } from "react-redux";
 // import get all products function from redux using action
-import { getAllProducts } from "../../Redux/actions/productActions";
+import { getAllProducts, getAllProductsPage } from "../../Redux/actions/productActions";
 // import  notifications alert
 import notify from "../useNotification";
 
@@ -14,13 +14,20 @@ const ViewSearchProductHook = (productsLimit) => {
   // reciving the product data from redux reducer
   const allProductsData = useSelector((state) => state.allProducts.allProducts);
 
-  let items = [];
+  
 
-  if (allProductsData.data) {
-    items = allProductsData;
-  } else {
-    items = [];
-  }
+  const items = useMemo(
+    () => allProductsData || [],
+    [allProductsData]
+  );
+
+  const pageCount = useMemo(() => {
+    return items?.paginationResult?.numberOfPages || 0;
+  }, [items]) 
+
+  const getPage = (page) => {
+    dispatch(getAllProductsPage(productsLimit, page));
+  };
 
   // to insure that all products will come from database every components rendered
   useEffect(() => {
@@ -36,7 +43,7 @@ const ViewSearchProductHook = (productsLimit) => {
     }
   }, [dispatch, productsLimit]);
 
-  return [items];
+  return [items, pageCount, getPage];
 };
 
 export default ViewSearchProductHook;

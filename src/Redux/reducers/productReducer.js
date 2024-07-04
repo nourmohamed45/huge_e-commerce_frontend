@@ -1,8 +1,11 @@
 import {
   CREATE_PRODUCT,
+  DELETE_PRODUCT,
   GET_ALL_PRODUCTS,
+  GET_ERROR,
   GET_PRODUCTS_BY_CATEGORY,
   GET_SPECIAL_PRODUCT,
+  UPDATE_PRODUCT,
 } from "../type";
 
 const initial = {
@@ -10,6 +13,9 @@ const initial = {
   allProducts: [],
   specialProducts: [],
   productByCategory: [],
+  deleteProduct: [],
+  updateProduct: [],
+  error: [],
   loading: true,
 };
 
@@ -38,6 +44,23 @@ const productReducer = (state = initial, action) => {
         productByCategory: action.payload,
         loading: false,
       };
+    case DELETE_PRODUCT:
+      return {
+        ...state,
+        deleteProduct: action.payloads,
+        loading: false,
+      }
+    case UPDATE_PRODUCT:
+      return {
+        ...state,
+        updateProduct: action.payloads,
+        loading: false,
+      }
+    case GET_ERROR:
+      return {
+        error: action.payload,
+        loading: false,
+      }
     default:
       return state;
   }

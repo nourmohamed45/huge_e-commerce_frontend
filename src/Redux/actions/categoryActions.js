@@ -27,12 +27,15 @@ export const getAllCategoryPage = (limit, page) => async (dispatch) => {
     dispatch({
       type: GET_ALL_CATEGORY,
       payload: response,
+      loading: true,
     });
   } catch (e) {
     dispatch({
       type: GET_ERROR,
       payload: 'Error: ' + e.message,
+      loading: true,
     });
+    throw e;
   }
 };
 

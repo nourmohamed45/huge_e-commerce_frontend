@@ -2,6 +2,10 @@ import ReactPaginate from "react-paginate";
 import PropTypes from "prop-types";
 
 const Pagination = ({ pageCount, onPress }) => {
+
+  // Ensure pageCount is a valid integer
+  const validPageCount = Math.max(1, Math.ceil(pageCount || 1));
+
   const handlePageClick = (data) => {
     onPress(data.selected + 1);
   };
@@ -13,7 +17,7 @@ const Pagination = ({ pageCount, onPress }) => {
       onPageChange={handlePageClick}
       marginPagesDisplayed={2}
       pageRangeDisplayed={2}
-      pageCount={pageCount}
+      pageCount={validPageCount}
       previousLabel="السابق"
       containerClassName="pagination justify-content-center p-3 mt-5"
       pageClassName="page-item"

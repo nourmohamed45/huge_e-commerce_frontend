@@ -8,16 +8,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllCategory } from "../../Redux/actions/categoryActions";
 import { getAllBrands } from "../../Redux/actions/brandActions";
 import { getSubcategoriesByCategory } from "../../Redux/actions/subCategoryActions";
-import { createProduct } from "../../Redux/actions/productActions";
+import {
+  getProductDetails,
+  updateProduct,
+} from "../../Redux/actions/productActions";
 
 // Custom hook for managing product addition logic
-const AddProductHook = () => {
+const EditProductHook = (id) => {
   const dispatch = useDispatch();
 
   // ================================= Variables =================================
   const colorLimit = 5;
 
   // ================================= Redux selectors =================================
+  // get product details from Redux
+  const specialProductData = useSelector(
+    (state) => state.allProducts.specialProducts
+  );
   // get last category state from redux
   const categoryData = useSelector((state) => state.allCategory.category);
   // get last subCategory state from redux
@@ -28,7 +35,7 @@ const AddProductHook = () => {
   const brandData = useSelector((state) => state.allBrands.brands);
 
   // ================================= State declarations =================================
-  const [selectedImages, setSelectedImages] = useState([]);
+  // State declarations with initial values
   const [productName, setProductName] = useState("");
   const [productDescription, setProductDescription] = useState("");
   const [priceBeforeDiscount, setPriceBeforeDiscount] = useState("");
@@ -37,12 +44,83 @@ const AddProductHook = () => {
   const [categoryID, setCategoryID] = useState("");
   const [brandID, setBrandID] = useState("");
   const [selectedSubCategoryID, setSelectedSubCategoryID] = useState([]);
-  const [showColorPicker, setShowColorPicker] = useState(false);
-  const [loading, setLoading] = useState(false);
-  // To Store All Colors
+  const [selectedImages, setSelectedImages] = useState([]);
   const [colors, setColors] = useState([]);
+  const [showColorPicker, setShowColorPicker] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   // ================================= Functions =================================
+  // Fetch product details on component mount =================================
+  useEffect(() => {
+    const fetchProductDetails = async () => {
+      setLoading(true);
+      try {
+        await dispatch(getProductDetails(id));
+      } catch (error) {
+        const errorMessage =
+          error?.response?.data?.errors?.[0]?.msg ||
+          error?.response?.data?.message ||
+          "An error occurred";
+        notify(errorMessage, "error");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProductDetails();
+  }, [dispatch, id]);
+
+  // Update state when product details are fetched
+  useEffect(() => {
+    if (specialProductData && specialProductData.data) {
+      const productData = specialProductData.data;
+      setProductName(productData.title || "");
+      setProductDescription(productData.description || "");
+      setPriceBeforeDiscount(productData.price?.toString() || "");
+      setQuantityAvailable(productData.quantity?.toString() || "");
+      setCategoryID(productData.category || "");
+      setBrandID(productData.brand || "");
+      setColors(productData.availableColors || []);
+
+      console.log(productData.subcategory);
+
+      // Handle images
+      const images = [];
+      if (productData.imageCover) {
+        images.push({ url: productData.imageCover });
+      }
+      if (productData.images && productData.images.length > 0) {
+        images.push(...productData.images.map((img) => ({ url: img })));
+      }
+      setSelectedImages(images);
+
+      // Fetch subcategories for the selected category
+      if (productData.category) {
+        dispatch(getSubcategoriesByCategory(productData.category));
+      }
+    }
+  }, [specialProductData, dispatch]);
+
+  // Fetch subcategories from product
+  useEffect(() => {
+    if (
+      specialProductData?.data?.subcategory &&
+      subCategoryByCategoryData?.data
+    ) {
+      const productSubcategories = specialProductData.data.subcategory;
+      const allSubcategories = subCategoryByCategoryData.data;
+
+      // Match subcategory IDs with full subcategory objects
+      const selectedSubcategories = productSubcategories
+        .map((subcatId) =>
+          allSubcategories.find((subcat) => subcat._id === subcatId)
+        )
+        .filter(Boolean); // Remove any undefined values
+
+      setSelectedSubCategoryID(selectedSubcategories);
+    }
+  }, [specialProductData, subCategoryByCategoryData]);
+
   // Selected Images Functions =================================
   // When User Select Images
   const handleImageChange = (e) => {
@@ -123,21 +201,27 @@ const AddProductHook = () => {
   // CategoryID Function =================================
   // Fetch categories and brands on component mount
   useEffect(() => {
-    if (!navigator.onLine) {
-      notify("هناك مشكله في الاتصال بالانترنت", "warn");
-      return;
-    }
+    const fetchCategoriesAndBrand = async () => {
+      if (!navigator.onLine) {
+        notify("هناك مشكله في الاتصال بالانترنت", "warn");
+        return;
+      }
 
-    dispatch(getAllCategory());
+      await dispatch(getAllCategory());
 
-    // get all brands
-    dispatch(getAllBrands());
+      // get all brands
+      await dispatch(getAllBrands());
+    };
+
+    fetchCategoriesAndBrand();
   }, [dispatch]);
 
   // Handle category selection
   const handleChangeCategorySelection = (e) => {
     const selectedCategoryID = e.target.value;
     setCategoryID(selectedCategoryID);
+    dispatch(getSubcategoriesByCategory(selectedCategoryID));
+    setSelectedSubCategoryID([]); // Reset subcategories when category changes
   };
 
   // SubCategoryID Function =================================
@@ -147,7 +231,7 @@ const AddProductHook = () => {
     if (categoryID.length > 0) {
       dispatch(getSubcategoriesByCategory(categoryID));
     }
-  }, [categoryID]);
+  }, [categoryID, dispatch]);
 
   // Handle subcategory selection and remove subCategory
   const onSelectSubCategory = (selectedList) => {
@@ -189,7 +273,7 @@ const AddProductHook = () => {
 
   // Product Functions =================================
   // To convert base64 or blob to image file
-  function processImageData(imageData, filename) {
+  async function processImageData(imageData, filename) {
     if (!imageData) {
       console.error("No image data provided");
       return null;
@@ -213,8 +297,13 @@ const AddProductHook = () => {
         }
         blob = new Blob([arr], { type: mime });
       } else {
-        console.error("Invalid image data format");
-        return null;
+        // Handle URL case
+        try {
+          blob = await fetch(imageData).then((res) => res.blob());
+        } catch (error) {
+          console.error("Error fetching image from URL", error);
+          return null;
+        }
       }
     } else {
       console.error("Unsupported image data type");
@@ -321,7 +410,7 @@ const AddProductHook = () => {
     // Check if there are any selected images
     if (selectedImages.length > 0) {
       // Process and append the cover image first
-      const imgCover = processImageData(
+      const imgCover = await processImageData(
         selectedImages[0].file || selectedImages[0].url,
         "cover_image.jpg"
       );
@@ -335,20 +424,30 @@ const AddProductHook = () => {
         return;
       }
 
-      // Append additional images if exist in the selected images to images array
-      selectedImages.slice(0).forEach((image, index) => {
-        const imgFile = processImageData(
-          image.file || image.url,
-          `product_image_${index + 1}.jpg`
-        );
-        if (imgFile) {
-          formData.append("images", imgFile);
-        } else {
-          console.warn(
-            `Failed to process image ${
-              index + 1
-            }. please try selecting the image again`
+      // Process and append additional images
+      const imagePromises = selectedImages
+        .slice(1)
+        .map(async (image, index) => {
+          const imgFile = await processImageData(
+            image.file || image.url,
+            `product_image_${index + 1}.jpg`
           );
+          if (imgFile) {
+            return imgFile;
+          } else {
+            console.warn(
+              `Failed to process image ${
+                index + 1
+              }. Please try selecting the image again.`
+            );
+            return null;
+          }
+        });
+
+      const processedImages = await Promise.all(imagePromises);
+      processedImages.forEach((img) => {
+        if (img) {
+          formData.append("images", img);
         }
       });
     } else {
@@ -359,20 +458,10 @@ const AddProductHook = () => {
     try {
       setLoading(true);
 
-      await dispatch(createProduct(formData));
-      notify("Product added successfully", "success");
+      await dispatch(updateProduct(id, formData));
+      notify("Product updated successfully", "success");
       setLoading(false);
-      // Reset form fields after successful submission
-      setProductName("");
-      setProductDescription("");
-      setPriceBeforeDiscount("");
-      setPriceAfterDiscount("");
-      setQuantityAvailable("");
-      setCategoryID("");
-      setBrandID("");
-      setSelectedSubCategoryID([]);
-      setSelectedImages([]);
-      setColors([]);
+
       scrollToTop(); // Scroll to top after showing validation errors
     } catch (error) {
       console.error(error);
@@ -417,7 +506,10 @@ const AddProductHook = () => {
     quantityAvailable,
     setQuantityAvailable,
     colors,
+    categoryID,
+    brandID,
+    selectedSubCategoryID,
   ];
 };
 
-export default AddProductHook;
+export default EditProductHook;

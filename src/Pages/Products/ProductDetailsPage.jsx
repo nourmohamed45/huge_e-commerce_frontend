@@ -6,7 +6,6 @@ import ProductCardContainer from "../../Components/Products/ProductCardContainer
 import { ToastContainer } from "react-toastify";
 import ViewProductDetailsHook from "../../Logic/product/view-product-details-hook";
 import { useParams } from "react-router-dom";
-import { useMemo } from "react";
 
 const ProductDetailsPage = () => {
   // Extract the product ID from the URL parameters

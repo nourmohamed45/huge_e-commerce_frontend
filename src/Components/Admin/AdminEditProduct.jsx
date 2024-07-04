@@ -1,20 +1,17 @@
-// import External Libraries
 import Multiselect from "multiselect-react-dropdown";
+import { Col, Row, Spinner } from "react-bootstrap";
 import { CompactPicker } from "react-color";
+import { useParams } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-
-// import React bootstrap components
-import { Row, Col, Spinner } from "react-bootstrap";
 
 // import images
 import avatar from "../../assets/images/avatar.png";
 import add from "../../assets/images/add.png";
 import remove from "../../assets/images/delete.png";
+import EditProductHook from "../../Logic/product/edit-product-hook";
 
-// import Custom hook for logic
-import AddProductHook from "../../Logic/product/add-product-hook";
-
-const AdminAddProducts = () => {
+const AdminEditProduct = () => {
+  const { id } = useParams();
   const [
     categoryData,
     subCategoryByCategoryData,
@@ -43,10 +40,17 @@ const AdminAddProducts = () => {
     quantityAvailable,
     setQuantityAvailable,
     colors,
-  ] = AddProductHook();
+    categoryID,
+    brandID,
+    selectedSubCategoryID,
+  ] = EditProductHook(id);
+
   return (
     <section>
       <Row className="justify-content-start">
+        <div className="admin-content-text pb-4">
+          تعديل المنتج :- {productName}
+        </div>
         <Col sm="8">
           {/* Uploading Images */}
           <div>
@@ -147,14 +151,14 @@ const AdminAddProducts = () => {
             التصنيف الرئيسي
           </label>
           <select
-            defaultValue={"default"}
+            value={categoryID}
             onChange={handleChangeCategorySelection}
             name="main-category"
             id="main-category"
             className="select input-form-area mt-3 px-2"
             aria-label="التصنيف الرئيسي"
           >
-            <option value="default" disabled>
+            <option value="" disabled>
               التصنيف الرئيسي
             </option>
             {categoryData?.data?.map((category) => (
@@ -172,7 +176,8 @@ const AdminAddProducts = () => {
             id="sub-category"
             className="mt-2 text-end"
             placeholder="التصنيف الفرعي"
-            options={subCategoryByCategoryData.data}
+            options={subCategoryByCategoryData.data || []}
+            selectedValues={selectedSubCategoryID}
             onSelect={onSelectSubCategory}
             onRemove={onRemoveSubCategory}
             displayValue="name"
@@ -184,16 +189,15 @@ const AdminAddProducts = () => {
             الماركة
           </label>
           <select
+            value={brandID}
             name="brand"
             id="brand"
             className="select input-form-area mt-3 px-2"
             aria-label="الماركة"
-            defaultValue={"default"}
             onChange={handleChangeBrandSelection}
           >
-            <option value="default" disabled>
-              {" "}
-              أختر الماركة{" "}
+            <option value="" disabled>
+              أختر الماركة
             </option>
             {brandData?.data?.map((brand) => (
               <option key={brand._id} value={brand._id}>
@@ -270,4 +274,4 @@ const AdminAddProducts = () => {
   );
 };
 
-export default AdminAddProducts;
+export default AdminEditProduct;

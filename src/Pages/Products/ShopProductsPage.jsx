@@ -7,7 +7,7 @@ import Pagination from "../../Components/utilities/Pagination";
 import ViewSearchProductHook from "../../Logic/product/view-search-product-hook";
 
 const ShopProductsPage = () => {
-  const [items] = ViewSearchProductHook(20);
+  const [items, pageCount, getPage] = ViewSearchProductHook(20);
   return (
     <div style={{ minHeight: "680px" }}>
       <CategoryHeader />
@@ -28,7 +28,9 @@ const ShopProductsPage = () => {
               />
             </Col>
           </Row>
-          <Pagination />
+          {pageCount > 1 && (
+            <Pagination pageCount={pageCount} onPress={getPage} />
+          )}
         </Container>
       ) : null}
     </div>
