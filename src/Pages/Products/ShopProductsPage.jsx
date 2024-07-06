@@ -7,25 +7,27 @@ import Pagination from "../../Components/utilities/Pagination";
 import ViewSearchProductHook from "../../Logic/product/view-search-product-hook";
 
 const ShopProductsPage = () => {
-  const [items, pageCount, getPage] = ViewSearchProductHook(20);
+  const [items, pageCount, getPage, getProducts] = ViewSearchProductHook();
   return (
     <div style={{ minHeight: "680px" }}>
       <CategoryHeader />
       {items ? (
         <Container className="my-3">
-          {items.results ? (
-            <SearchCountResult title={`نتيجة بحث ${items.results}`} />
-          ) : null}
+          <SearchCountResult getProductBySort={getProducts} title={`نتيجة بحث ${items.results}`} />
           <Row className="d-flex flex-row">
             <Col className="d-flex" xs="2" sm="2" md="1">
               <SideFilter />
             </Col>
             <Col xs="10" sm="10" md="11">
-              <ProductCardContainer
-                productsData={items.data}
-                title=""
-                subtitlebtn=""
-              />
+              {items.results > 0 ? (
+                <ProductCardContainer
+                  productsData={items.data}
+                  title=""
+                  subtitlebtn=""
+                />
+              ) : (
+                <h1>لايوجد نتيجة بحث</h1>
+              )}
             </Col>
           </Row>
           {pageCount > 1 && (

@@ -61,6 +61,25 @@ export const getAllProductsPage = (limit, page) => async (dispatch) => {
   }
 }
 
+// Get All Products by Searching with all types of search
+export const getAllProductsQuerySearch = (queryString) => async (dispatch) => {
+  try {
+    const response = await useGetData(`/api/v1/products?${queryString}`);
+    dispatch({
+      type: GET_ALL_PRODUCTS,
+      payload: response,
+      loading: true,
+    });
+  } catch (e) {
+    dispatch({
+      type: GET_ERROR,
+      payload: `Error: ${e.message}`,
+      loading: true,
+    });
+    throw e;
+  }
+}
+
 // Get Specific Product details
 export const getProductDetails = (id) => async (dispatch) => {
   try {

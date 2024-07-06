@@ -10,44 +10,13 @@ import PropTypes from "prop-types";
 
 // import images
 import rate from "../../assets/images/rate.png";
-import { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
-import {
-  deleteProduct,
-  getAllProducts,
-} from "../../Redux/actions/productActions";
-import notify from "../../Logic/useNotification";
+
 import { ToastContainer } from "react-toastify";
+import AdminAllProductCardsHook from "../../Logic/product/admin-all-product-cards-hook";
 
 const AdminAllProductsCard = ({ productCardData }) => {
-  const dispatch = useDispatch();
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const handleDelete = useCallback(
-    async (id) => {
-      try {
-        await dispatch(deleteProduct(id));
-        notify("تم عملية الحذف بنجاح", "success");
-
-        // Close the modal immediately after successful deletion
-        setShow(false);
-
-        // Delay the products refresh to allow the notification to be visible
-        setTimeout(async () => {
-          await dispatch(getAllProducts());
-        }, 1500); // 3 seconds delay, adjust as needed
-      } catch (error) {
-        notify(error.response.data.message, "error");
-        if (error?.response.status === 400) {
-          notify(error.response.data.errors[0].msg, "error");
-        }
-      }
-    },
-    [dispatch]
-  );
+  const [show, handleClose, handleShow, handleDelete] =
+    AdminAllProductCardsHook();
 
   return (
     <Col className="d-flex" xs="10" sm="6" md="4" lg="4">

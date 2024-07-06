@@ -7,9 +7,15 @@ import PropTypes from "prop-types";
 // import images
 import sort from "../../assets/images/sort.png"
 
-const SearchCountResult = ({title}) => {
+const SearchCountResult = ({getProductBySort, title}) => {
 
   const handler = () => {
+  };
+
+  const sortClick = (sortType) => {
+    localStorage.setItem("sortType", sortType)
+    // dispatch action to sort the products
+    getProductBySort()
   };
 
   return (
@@ -38,14 +44,16 @@ const SearchCountResult = ({title}) => {
             closeOnClickOut
           >
             <div className="card-filter">
-              <div className="border-bottom card-filter-item">الاكثر مبيعا</div>
-              <div className="border-bottom card-filter-item">
+              <div onClick={() => sortClick("")} className="border-bottom card-filter-item">بدون ترتيب</div>
+              <div onClick={() => sortClick("الاكثر مبيعا")} className="border-bottom card-filter-item">الاكثر مبيعا</div>
+              <div onClick={() => sortClick("الاعلي تقييما")} className="border-bottom card-filter-item">
                 الاعلي تقييما
               </div>
-              <div className="border-bottom card-filter-item">
+              <div onClick={() => sortClick("السعر من الاقل للاعلي")} className="border-bottom card-filter-item">
                 السعر من الاقل للاعلي
               </div>
-              <div className="card-filter-item">السعر من الاعلي للاقل</div>
+              <div onClick={() => sortClick("السعر من الاعلي للاقل")} className="card-filter-item">السعر من الاعلي للاقل</div>
+              <div onClick={() => sortClick("الأعلي كمية")} className="card-filter-item">الأعلي كمية</div>
             </div>
           </UnopDropdown>
         </div>
@@ -58,4 +66,5 @@ export default SearchCountResult;
 
 SearchCountResult.propTypes = {
   title: PropTypes.string,
+  getProductBySort: PropTypes.func,
 };

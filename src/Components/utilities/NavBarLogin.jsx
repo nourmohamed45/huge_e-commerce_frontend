@@ -2,8 +2,15 @@ import { Container, Form, Nav, Navbar } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import login from "../../assets/images/login.png";
 import cart from "../../assets/images/cart.png";
+import NavbarSearchHook from "../../Logic/search/navbar-search-hook";
 
 const NavBarLogin = () => {
+  const [ ,onChangeSearch] = NavbarSearchHook()
+  let word = "";
+    if (localStorage.getItem("searchWord")) {
+      word = localStorage.getItem("searchWord");
+    }
+
   return (
     <Navbar expand="sm" className="sticky-top" bg="dark" variant="dark" style={{zIndex: "999"}}>
       <Container>
@@ -13,6 +20,8 @@ const NavBarLogin = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Form.Control
+            value={word}
+            onChange={onChangeSearch}
             type="search"
             placeholder="ابحث..."
             className="mx-md-3  w-100 mt-3 mt-md-0 text-center"
