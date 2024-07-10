@@ -1,18 +1,23 @@
-import { Container, Form, Nav, Navbar } from "react-bootstrap";
+import { Container, Form, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import logo from "../../assets/images/logo.png";
 import login from "../../assets/images/login.png";
 import cart from "../../assets/images/cart.png";
 import NavbarSearchHook from "../../Logic/search/navbar-search-hook";
+import NavbarLoginHook from "../../Logic/auth/navbar-login-hook";
 
 const NavBarLogin = () => {
-  const [ ,onChangeSearch] = NavbarSearchHook()
-  let word = "";
-    if (localStorage.getItem("searchWord")) {
-      word = localStorage.getItem("searchWord");
-    }
+  const [, onChangeSearch, word] = NavbarSearchHook();
+
+  const { user, logOut } = NavbarLoginHook();
 
   return (
-    <Navbar expand="sm" className="sticky-top" bg="dark" variant="dark" style={{zIndex: "999"}}>
+    <Navbar
+      expand="sm"
+      className="sticky-top"
+      bg="dark"
+      variant="dark"
+      style={{ zIndex: "999" }}
+    >
       <Container>
         <Navbar.Brand href="/">
           <img src={logo} className="logo" alt="Logo" />
@@ -33,13 +38,30 @@ const NavBarLogin = () => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link
-              href="/login"
-              className="nav-text d-flex justify-content-center align-items-center"
-            >
-              <img src={login} alt="Login Img" className="login-img ms-2" />
-              <p style={{ marginBottom: "0px" }}>دخول</p>
-            </Nav.Link>
+            {user ? (
+              <NavDropdown title={user.name} id="basic-nav-dropdown">
+                {user?.role === "user" ? (
+                  <NavDropdown.Item href="/user/profile">
+                    الصفحة الشخصية
+                  </NavDropdown.Item>
+                ) : (
+                  <NavDropdown.Item href="/admin/allproducts">
+                    لوحة التحكم
+                  </NavDropdown.Item>
+                )}
+                <NavDropdown.Item href="/" onClick={logOut}>
+                  تسجيل خروج
+                </NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav.Link
+                href="/login"
+                className="nav-text d-flex justify-content-center align-items-center"
+              >
+                <img src={login} alt="Login Img" className="login-img ms-2" />
+                <p style={{ marginBottom: "0px" }}>دخول</p>
+              </Nav.Link>
+            )}
             <Nav.Link
               href="/cart"
               className="nav-text d-flex justify-content-center align-items-center"

@@ -38,3 +38,18 @@ export const GET_PRODUCTS_BY_CATEGORY = "GET_PRODUCTS_BY_CATEGORY";
 export const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+
+
+// Authentication
+
+export const LOGIN_USER = "LOGIN_USER";
+
+export const REGISTER_USER = "REGISTER_USER";
+
+export const LOGOUT_USER = "LOGOUT_USER";
+
+export const FORGET_PASSWORD = "FORGET_PASSWORD";
+
+export const VERIFY_RESET_CODE = "VERIFY_RESET_CODE"
+
+export const RESET_PASSWORD = "RESET_PASSWORD"

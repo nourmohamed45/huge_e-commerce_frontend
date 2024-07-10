@@ -13,10 +13,8 @@ const SideFilter = () => {
     handlePriceFrom,
     handlePriceTo,
     priceFromStorage,
-    priceToStorage
+    priceToStorage,
   ] = SideFilterHook();
-
-
 
   return (
     <div className="mt-3">

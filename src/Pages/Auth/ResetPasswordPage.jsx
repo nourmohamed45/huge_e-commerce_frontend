@@ -1,77 +1,42 @@
 import { Button, Col, Container, Form, Row, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import RegisterHook from "../../Logic/auth/register-hook";
 import { ToastContainer } from "react-toastify";
+import ResetPasswordHook from "../../Logic/auth/reset-password-hook";
 import openEye from "../../assets/images/openEye.png";
 import closeEye from "../../assets/images/closeEye.png";
 
-const RegisterPage = () => {
-  const [
+const ResetPasswordPage = () => {
+  const {
     formData,
-    loading,
     handleChange,
     handleSubmit,
-    togglePasswordVisibility,
-    toggleConfirmPasswordVisibility,
+    loading,
     showPassword,
+    togglePasswordVisibility,
     showConfirmPassword,
-  ] = RegisterHook();
+    toggleConfirmPasswordVisibility,
+  } = ResetPasswordHook();
 
   return (
     <Container style={{ minHeight: "680px" }}>
       <Row className="py-5 d-flex justify-content-center">
         <Col sm={12} className="d-flex flex-column">
           <h2 className="mx-auto title-login" id="login-heading">
-            تسجيل حساب جديد
+            أدخل كلمة السر الجديدة
           </h2>
           <Form
-            className="d-flex flex-column align-items-center"
             onSubmit={handleSubmit}
+            className="d-flex align-items-center flex-column"
           >
-            {/* User Name */}
-            <Form.Group controlId="formUserName">
-              <Form.Label className="visually-hidden">اسم المستخدم:</Form.Label>
-              <Form.Control
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                type="text"
-                placeholder="اسم المستخدم..."
-                className="user-input my-3 text-center mx-auto"
-                aria-labelledby="register-heading"
-                aria-describedby="username-description"
-              />
-              <Form.Text id="username-description" className="visually-hidden">
-                ادخل اسم المستخدم الخاص بك.
-              </Form.Text>
-            </Form.Group>
-            {/* Email */}
-            <Form.Group controlId="formEmail">
-              <Form.Label className="visually-hidden">الايميل:</Form.Label>
-              <Form.Control
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                type="email"
-                placeholder="الايميل..."
-                className="user-input my-3 text-center mx-auto"
-                aria-labelledby="register-heading"
-                aria-describedby="email-description"
-              />
-              <Form.Text id="email-description" className="visually-hidden">
-                أدخل عنوان البريد الإلكتروني الخاص بك.
-              </Form.Text>
-            </Form.Group>
-            {/* Password */}
+            {/* ================== Password ================== */}
             <Form.Group
               controlId="formPassword"
               style={{ position: "relative" }}
             >
-              <Form.Label className="visually-hidden">كلمة السر:</Form.Label>
+              <Form.Label className="visually-hidden">كلمة السر الجديدة:</Form.Label>
               <div style={{ position: "relative", width: "fit-content" }}>
                 <Form.Control
-                  name="password"
-                  value={formData.password}
+                  name="newPassword"
+                  value={formData.newPassword}
                   onChange={handleChange}
                   type={showPassword ? "text" : "password"}
                   placeholder="كلمة السر..."
@@ -101,10 +66,10 @@ const RegisterPage = () => {
                 </Button>
               </div>
               <Form.Text id="password-description" className="visually-hidden">
-                أدخل كلمة المرور الخاصة بك.
+                أدخل كلمة المرور الجديدة.
               </Form.Text>
             </Form.Group>
-            {/* Confirm Password */}
+            {/* ================== Confirm Password ================== */}
             <Form.Group
               controlId="formConfirmPassword"
               style={{ position: "relative" }}
@@ -151,55 +116,19 @@ const RegisterPage = () => {
                 يرجي تأكيد كلمة المرور الخاصة بك.
               </Form.Text>
             </Form.Group>
-            {/* Phone Number */}
-            <Form.Group controlId="phoneNumber">
-              <Form.Label className="visually-hidden">رقم الهاتف:</Form.Label>
-              <Form.Control
-                name="phoneNumber"
-                value={formData.phoneNumber}
-                onChange={handleChange}
-                type="phone"
-                placeholder="رقم الهاتف..."
-                className="user-input my-3 text-center mx-auto"
-                aria-labelledby="register-heading"
-                aria-describedby="phone-number-description"
-              />
-              <Form.Text
-                id="phone-number-description"
-                className="visually-hidden"
-              >
-                أدخل رقم الهاتف.
-              </Form.Text>
-            </Form.Group>
-            {/* Register Button */}
+            {/* ================== Submit Button ================== */}
             <Button
               type="submit"
               className="btn-login mx-auto mt-4"
-              aria-label="تسجيل الدخول"
+              aria-label="التأكيد"
             >
               {loading ? (
                 <Spinner animation="border" variant="primary" />
               ) : (
-                "تسجيل الحساب"
+                "تأكيد"
               )}
             </Button>
           </Form>
-          {/* Login Link Instead */}
-          <div className="mx-auto my-4">
-            لديك حساب بالفعل؟{" "}
-            <Link to={"/login"} className="link-underline">
-              <span
-                style={{ cursor: "pointer" }}
-                className="text-danger"
-                aria-describedby="login-description"
-              >
-                اضغط هنا
-              </span>
-            </Link>
-            <div id="login-description" className="visually-hidden">
-              انقر هنا لإنشاء حساب جديد.
-            </div>
-          </div>
         </Col>
       </Row>
       {/* Notification */}
@@ -208,4 +137,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default ResetPasswordPage;

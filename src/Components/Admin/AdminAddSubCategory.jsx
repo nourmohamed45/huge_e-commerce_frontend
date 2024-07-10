@@ -1,11 +1,8 @@
 import { Col, Row, Spinner } from "react-bootstrap";
-
-// import  notification alert
 import { ToastContainer } from "react-toastify";
 import AddSubCategoryHook from "../../Logic/subCategory/add-sub-category-hook";
 
 const AdminAddSubCategory = () => {
-  
   const [
     isPress,
     loading,
@@ -55,11 +52,17 @@ const AdminAddSubCategory = () => {
                 <option value="default" disabled>
                   إختر التصنيف الرئيسي
                 </option>
-                {categoryData?.data?.map((category) => (
-                  <option key={category._id} value={category._id}>
-                    {category.name}
-                  </option>
-                ))}
+                {categoryData &&
+                categoryData.data &&
+                categoryData.data.length > 0 ? (
+                  categoryData.data.map((category) => (
+                    <option key={category._id} value={category._id}>
+                      {category.name}
+                    </option>
+                  ))
+                ) : (
+                  <option disabled>لا توجد تصنيفات متاحة</option>
+                )}
               </select>
             </Col>
           </Row>

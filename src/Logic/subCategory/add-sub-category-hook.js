@@ -21,7 +21,7 @@ const AddSubCategoryHook = () => {
     (state) => state.allSubCategories.subCategory
   );
 
-    // ================================= the whole states =================================
+  // ================================= the whole states =================================
   const [subCategoryName, setSubCategoryName] = useState("");
   const [categoryId, setCategoryId] = useState("default");
   const [loading, setLoading] = useState(true);

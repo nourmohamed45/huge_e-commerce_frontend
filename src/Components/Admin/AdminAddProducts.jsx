@@ -195,11 +195,15 @@ const AdminAddProducts = () => {
               {" "}
               أختر الماركة{" "}
             </option>
-            {brandData?.data?.map((brand) => (
-              <option key={brand._id} value={brand._id}>
-                {brand.name}
-              </option>
-            ))}
+            {brandData && brandData.data && brandData.data.length > 0 ? (
+              brandData?.data?.map((brand) => (
+                <option key={brand._id} value={brand._id}>
+                  {brand.name}
+                </option>
+              ))
+            ) : (
+              <option disabled>لاتوجد ماركات متاحة</option>
+            )}
           </select>
 
           {/* Colors */}

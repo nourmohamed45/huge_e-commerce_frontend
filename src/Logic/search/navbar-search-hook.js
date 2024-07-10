@@ -15,6 +15,11 @@ const NavbarSearchHook = () => {
     }
   }
 
+  let word = "";
+    if (localStorage.getItem("searchWord")) {
+      word = localStorage.getItem("searchWord");
+    }
+
 
   useEffect(() => {
     setTimeout(() => {
@@ -35,7 +40,7 @@ const NavbarSearchHook = () => {
 
 
 
-  return [searchWord,onChangeSearch]
+  return [searchWord,onChangeSearch, word]
 }
 
 export default NavbarSearchHook
