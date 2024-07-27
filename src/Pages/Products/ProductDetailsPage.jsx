@@ -13,16 +13,17 @@ const ProductDetailsPage = () => {
 
   // Use the custom hook to fetch product details and related products
   // Note: Unused variables are left in the array to maintain the hook's return structure and we will use them on other components
-  const [, , loading, , , , productsData] = ViewProductDetailsHook(id);
+  const [, , loading, , , , productsData, ratingCount] = ViewProductDetailsHook(id);
 
-  
+    
+
 
   return (
     <div style={{ minHeight: "680px" }}>
       <CategoryHeader />
       <Container>
         <ProductDetails />
-        <RateContainer />
+        <RateContainer ratingCount={ratingCount} />
         {loading ? (
           <Spinner animation="border" variant="primary" />
         ) : (

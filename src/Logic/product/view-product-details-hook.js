@@ -94,6 +94,12 @@ const ViewProductDetailsHook = (id) => {
 
   
 
+  // Rating ============================================================
+  if (items) {
+    var ratingCount = items.ratingsQuantity
+
+  }
+
   return [
     items,
     images,
@@ -101,7 +107,8 @@ const ViewProductDetailsHook = (id) => {
     categoryData,
     brandData,
     productsByCategoryData,
-    productsData
+    productsData,
+    ratingCount
   ];
 };
 

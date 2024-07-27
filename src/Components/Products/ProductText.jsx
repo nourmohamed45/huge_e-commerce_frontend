@@ -1,7 +1,6 @@
 import { Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import ViewProductDetailsHook from "../../Logic/product/view-product-details-hook";
-import { ToastContainer } from "react-toastify";
 
 const ProductText = () => {
   const { id } = useParams();
@@ -88,8 +87,6 @@ const ProductText = () => {
           </button>
         </Col>
       </Row>
-      {/* Notification */}
-      <ToastContainer />
     </section>
   );
 };

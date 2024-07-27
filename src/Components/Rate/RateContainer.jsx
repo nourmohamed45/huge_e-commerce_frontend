@@ -1,14 +1,15 @@
-import { Col, Container, Row } from "react-bootstrap";
-
+import { Col, Container, Row, Spinner } from "react-bootstrap";
 
 // import components
 import RateItem from "./RateItem";
 import RatePost from "./RatePost";
-import Pagination from "../utilities/Pagination"
+import Pagination from "../utilities/Pagination";
 
+import PropTypes from "prop-types";
+import ViewAllReviewHook from "../../Logic/review/view-all-review-hook";
 
-
-const RateContainer = () => {
+const RateContainer = ({ ratingCount }) => {
+  const [loading, reviews, onPress] = ViewAllReviewHook();
   return (
     <Container className="rate-container">
       <Row>
@@ -36,16 +37,27 @@ const RateContainer = () => {
               4.5
             </div>
           </span>
-          <div className="rate-count d-inline p-1 pt-2 ">(160 تقييم)</div>
+          <div className="rate-count d-inline p-1 pt-2 ">
+            ({`${ratingCount} تقييم`})
+          </div>
         </Col>
       </Row>
       <RatePost />
-      <RateItem />
-      <RateItem />
-      <RateItem />
-      <Pagination />
+      {loading ? (
+        <Spinner animation="border" variant="primary" />
+      ) : reviews ? (
+        reviews?.data?.map((review) => <RateItem key={review._id} review={review} />)
+      ) : (
+        <p>No reviews available.</p>
+      )}
+
+      <Pagination pageCount={reviews?.paginationResult?.numberOfPages} onPress={onPress} />
     </Container>
   );
+};
+
+RateContainer.propTypes = {
+  ratingCount: PropTypes.number,
 };
 
 export default RateContainer;

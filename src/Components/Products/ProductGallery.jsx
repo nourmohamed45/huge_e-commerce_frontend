@@ -7,7 +7,6 @@ import RightButton from "./RightButton";
 import { useParams } from "react-router-dom";
 import ViewProductDetailsHook from "../../Logic/product/view-product-details-hook";
 import { Spinner } from "react-bootstrap";
-import { ToastContainer } from "react-toastify";
 
 const ProductGallery = () => {
   const { id } = useParams();
@@ -33,9 +32,6 @@ const ProductGallery = () => {
       ) : (
         <Spinner animation="border" variant="primary" />
       )}
-
-      {/* Notification */}
-      <ToastContainer />
     </div>
   );
 };

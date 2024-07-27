@@ -1,11 +1,39 @@
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Modal, Row } from "react-bootstrap";
 
-const RateItem = () => {
+import PropTypes from "prop-types";
+
+import deleteIcon from "../../assets/images/delete.png";
+import editIcon from "../../assets/images/edit.png";
+import DeleteRateHook from "../../Logic/review/delete-rate-hook";
+
+const RateItem = ({ review }) => {
+  const [showDelete, userCheckExist, , handleClose, handleShow, handleDelete] = DeleteRateHook(review);
   return (
     <>
+    {/* Start Modal Compoennt */}
+    <Modal show={showDelete} onHide={handleClose}>
+        <Modal.Header>
+          <Modal.Title>هل تريد الحذف</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          سيتم حذف التعليق{" "}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            إلغاء
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => handleDelete(review._id)}
+          >
+            حذف
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      {/* End Modal Compoennt */}
       <Row className="mt-3">
         <Col className="d-flex me-5 align-items-center">
-          <div className="rate-name  d-inline ms-2">احمد محمود</div>
+          <div className="rate-name  d-inline ms-2">{review.user.name}</div>
           <span
             className="cat-rate   d-flex align-items-center gap-1"
             aria-label="Rating 4.5"
@@ -25,20 +53,41 @@ const RateItem = () => {
               className="d-flex align-items-center"
               style={{ height: "fit-content", marginTop: "3px" }}
             >
-              4.5
+              {review.rating}
             </div>
           </span>
         </Col>
       </Row>
       <Row className="border-bottom mx-2 mt-2">
-        <Col className="d-flex me-4 pb-2">
-          <div className="rate-description  d-inline ms-2">
-            منتج مناسب سعره للوقت الحالي وجه كويس جدا ومعاه دراع زيادة
-          </div>
+        <Col className="d-flex me-4 pb-2 justify-content-between">
+          <div className="rate-description  d-inline ms-2">{review.review}</div>
+          {userCheckExist ? (
+            <div className="d-flex gap-2">
+              <img
+                src={deleteIcon}
+                width={"22px"}
+                height={"22px"}
+                style={{ cursor: "pointer" }}
+                alt="delete"
+                onClick={handleShow}
+              />
+              <img
+                src={editIcon}
+                width={"22px"}
+                height={"22px"}
+                style={{ cursor: "pointer" }}
+                alt="edit"
+              />
+            </div>
+          ) : null}
         </Col>
       </Row>
     </>
   );
+};
+
+RateItem.propTypes = {
+  review: PropTypes.object,
 };
 
 export default RateItem;
