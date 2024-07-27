@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import notify from "../useNotification";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 import { deleteSpecificReview, getAllReviewsProduct } from "../../Redux/actions/reviewAction";
 
 const DeleteRateHook = (review) => {
@@ -13,7 +13,6 @@ const DeleteRateHook = (review) => {
 
   // dispatche and navigate
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // functions
   const handleClose = () => setShowDelete(false);
@@ -40,7 +39,7 @@ const DeleteRateHook = (review) => {
         // Delay the products refresh to allow the notification to be visible
         setTimeout(async () => {
           await dispatch(getAllReviewsProduct(id, 1, 4));
-        }, 1500); // 3 seconds delay, adjust as needed
+        }, 1000); // 3 seconds delay, adjust as needed
       } catch (error) {
         notify(error.response.data.message, "error");
         if (error?.response.status === 400) {

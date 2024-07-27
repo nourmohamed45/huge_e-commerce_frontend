@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import notify from "../useNotification";
 import { useParams } from "react-router-dom";
-import { createReview } from "../../Redux/actions/reviewAction";
+import { createReview, getAllReviewsProduct } from "../../Redux/actions/reviewAction";
 
 const AddRateHook = () => {
   const { id } = useParams();
@@ -75,6 +75,10 @@ const AddRateHook = () => {
         })
       );
       notify("تمت إضافة تقييم بنجاح", "success");
+
+      setTimeout(async () => {
+        await dispatch(getAllReviewsProduct(id, 1, 4));
+      }, 1000);
     } catch (error) {
       notify(error.response.data.message, "error");
       if (error?.response.status === 400) {
