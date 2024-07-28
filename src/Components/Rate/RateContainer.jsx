@@ -7,9 +7,14 @@ import Pagination from "../utilities/Pagination";
 
 import PropTypes from "prop-types";
 import ViewAllReviewHook from "../../Logic/review/view-all-review-hook";
+import { useParams } from "react-router-dom";
+import ViewProductDetailsHook from "../../Logic/product/view-product-details-hook";
 
 const RateContainer = ({ ratingCount }) => {
+  const { id } = useParams();
+  const [items, , , , ] = ViewProductDetailsHook(id);
   const [loading, reviews, onPress] = ViewAllReviewHook();
+  
   return (
     <Container className="rate-container">
       <Row>
@@ -34,7 +39,7 @@ const RateContainer = ({ ratingCount }) => {
               className="d-flex align-items-center"
               style={{ height: "fit-content", marginTop: "3px" }}
             >
-              4.5
+              {items.ratingsAverage || 0}
             </div>
           </span>
           <div className="rate-count d-inline p-1 pt-2 ">

@@ -7,7 +7,7 @@ import favoff from "../../assets/images/fav-off.png";
 import rate from "../../assets/images/rate.png";
 import { Link } from "react-router-dom";
 
-const ProductCard = ({ id, title, price, img, ratenum }) => {
+const ProductCard = ({ id, title, price, img, rateAvg }) => {
   return (
     <Col className="d-flex" xs="12" sm="6" md="4" lg="3">
       <Card
@@ -53,7 +53,7 @@ const ProductCard = ({ id, title, price, img, ratenum }) => {
                   height="16px"
                   width="16px"
                 />
-                <div className="card-rate mx-2">{ratenum}</div>
+                <div className="card-rate mx-2">{rateAvg || 0}</div>
               </div>
               <div className="d-flex">
                 <div className="card-price">{price}</div>
@@ -74,5 +74,5 @@ ProductCard.propTypes = {
   title: PropTypes.string,
   price: PropTypes.number,
   img: PropTypes.string,
-  ratenum: PropTypes.number,
+  rateAvg: PropTypes.number,
 };

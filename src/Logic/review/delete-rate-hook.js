@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import notify from "../useNotification";
 import {  useParams } from "react-router-dom";
 import { deleteSpecificReview, getAllReviewsProduct } from "../../Redux/actions/reviewAction";
+import { getProductDetails } from "../../Redux/actions/productActions";
 
 const DeleteRateHook = (review) => {
   const {id} = useParams();
@@ -39,6 +40,7 @@ const DeleteRateHook = (review) => {
         // Delay the products refresh to allow the notification to be visible
         setTimeout(async () => {
           await dispatch(getAllReviewsProduct(id, 1, 4));
+          await dispatch(getProductDetails(id));
         }, 1000); // 3 seconds delay, adjust as needed
       } catch (error) {
         notify(error.response.data.message, "error");

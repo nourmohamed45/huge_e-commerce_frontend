@@ -34,7 +34,7 @@ const ProductText = () => {
                 className="d-flex align-items-center"
                 style={{ height: "fit-content", marginTop: "3px" }}
               >
-                {items.ratingsQuantity}
+                {items.ratingsAverage || 0}
               </div>
             </span>
           </article>

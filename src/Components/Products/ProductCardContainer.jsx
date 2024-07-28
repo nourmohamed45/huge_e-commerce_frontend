@@ -22,7 +22,7 @@ const ProductCardContainer = ({
             title={product.title}
             price={product.price}
             img={product.imageCover}
-            ratenum={product.ratingsQuantity}
+            rateAvg={product.ratingsAverage}
           />
         ))}
       </Row>

@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 
-const StarRating = ({ reviewValue, handleRatingChange }) => {
+const StarRatingEdit = ({ reviewValueEdit, handleRatingChangeEdit }) => {
   const styles = useMemo(() => ({
     container: {
       display: 'flex',
@@ -88,15 +88,15 @@ const StarRating = ({ reviewValue, handleRatingChange }) => {
     <React.Fragment key={star}>
       <input
         type="radio"
-        id={`star-${star}`}
-        name="star-radio"
+        id={`star-edit-${star}`}
+        name="star-radio-edit"
         value={`star-${star}`}
-        checked={reviewValue === star}
-        onChange={() => handleRatingChange(star)}
+        checked={reviewValueEdit === star}
+        onChange={() => handleRatingChangeEdit(star)}
         style={styles.input}
       />
       <label
-        htmlFor={`star-${star}`}
+        htmlFor={`star-edit-${star}`}
         style={styles.label}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -104,7 +104,7 @@ const StarRating = ({ reviewValue, handleRatingChange }) => {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          style={reviewValue >= star ? { ...styles.svg, ...styles.checkedSvg } : styles.svg}
+          style={reviewValueEdit >= star ? { ...styles.svg, ...styles.checkedSvg } : styles.svg}
         >
           <path
             pathLength="360"
@@ -113,7 +113,7 @@ const StarRating = ({ reviewValue, handleRatingChange }) => {
         </svg>
       </label>
     </React.Fragment>
-  ), [reviewValue, handleRatingChange, styles, handleMouseEnter, handleMouseLeave]);
+  ), [reviewValueEdit, handleRatingChangeEdit, styles, handleMouseEnter, handleMouseLeave]);
 
   return (
     <>
@@ -125,9 +125,9 @@ const StarRating = ({ reviewValue, handleRatingChange }) => {
   );
 };
 
-StarRating.propTypes = {
-  reviewValue: PropTypes.number.isRequired,
-  handleRatingChange: PropTypes.func.isRequired,
+StarRatingEdit.propTypes = {
+  reviewValueEdit: PropTypes.number.isRequired,
+  handleRatingChangeEdit: PropTypes.func.isRequired,
 };
 
-export default React.memo(StarRating);
+export default React.memo(StarRatingEdit);

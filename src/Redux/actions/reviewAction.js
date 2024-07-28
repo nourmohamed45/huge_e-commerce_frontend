@@ -1,7 +1,8 @@
 import useDeleteData from "../../Hooks/useDeleteData"
 import { useGetDataToken } from "../../Hooks/useGetData"
 import { useInsertData } from "../../Hooks/useInsertData"
-import { ALL_REVIEWS_PRODUCT, CREATE_REVIEW, DELETE_SPECIFIC_REVIEW } from "../type"
+import { useUpdateData } from "../../Hooks/useUpdateData"
+import { ALL_REVIEWS_PRODUCT, CREATE_REVIEW, DELETE_SPECIFIC_REVIEW, UPDATE_SPECIFIC_REVIEW } from "../type"
 
 
 // Create a new review for a product
@@ -57,6 +58,27 @@ export const deleteSpecificReview = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_SPECIFIC_REVIEW,
+      payload: error.response,
+    })
+    throw error;
+  }
+  
+}
+
+
+// Create a new review for a product
+export const updateSpecificReview = (id, params) => async (dispatch) => {
+
+  try {
+  const response = await useUpdateData(`/api/v1/reviews/${id}`, params)
+  dispatch({
+    type: UPDATE_SPECIFIC_REVIEW,
+    payload: response,
+    loading: true,
+  })
+  } catch (error) {
+    dispatch({
+      type: UPDATE_SPECIFIC_REVIEW,
       payload: error.response,
     })
     throw error;

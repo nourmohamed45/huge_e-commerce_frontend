@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import notify from "../useNotification";
 import { useParams } from "react-router-dom";
 import { createReview, getAllReviewsProduct } from "../../Redux/actions/reviewAction";
+import { getProductDetails } from "../../Redux/actions/productActions";
 
 const AddRateHook = () => {
   const { id } = useParams();
@@ -78,6 +79,7 @@ const AddRateHook = () => {
 
       setTimeout(async () => {
         await dispatch(getAllReviewsProduct(id, 1, 4));
+        await dispatch(getProductDetails(id));
       }, 1000);
     } catch (error) {
       notify(error.response.data.message, "error");

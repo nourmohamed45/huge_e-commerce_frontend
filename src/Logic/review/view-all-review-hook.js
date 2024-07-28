@@ -13,10 +13,6 @@ const ViewAllReviewHook = () => {
   // selector
   const reviews = useSelector((state) => state.reviewReducer.allReviews);
 
-  if (reviews) {
-    console.log(reviews);
-  }
-
   useEffect(() => {
     const fetchReviews = async () => {
       setLoading(true);
