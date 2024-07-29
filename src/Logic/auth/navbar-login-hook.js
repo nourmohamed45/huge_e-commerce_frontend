@@ -12,6 +12,7 @@ const NavbarLoginHook = () => {
 
   const logOut = useCallback(() => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     setUser(null);
   }, []);
 

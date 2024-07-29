@@ -1,11 +1,9 @@
-import { Row } from "react-bootstrap";
-import ProductCardContainer from "../Products/ProductCardContainer";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllProductFromWishList } from "../../Redux/actions/wishlistAction";
-import notify from "../../Logic/useNotification";
+import notify from "../useNotification";
 
-const UserFavoriteList = () => {
+const GetLoggedUserWishlistHook = () => {
   const [loading, setLoading] = useState(false);
   const [wishListData, setWishListData] = useState([]);
   const dispatch = useDispatch();
@@ -32,26 +30,14 @@ const UserFavoriteList = () => {
 
   useEffect(() => {
     if (!loading && res.data) {
-      console.log(res.data);
       if (localStorage.getItem("token")) {
-        setWishListData(res.data);
+        setWishListData(res.data.map((item) => item._id));
       }
     }
   }, [loading, res.data]);
-  return (
-    <section>
-      <h2 className="admin-content-text"> قائمة المفضلة </h2>
-      <Row className="justify-content-start">
-        {
-          wishListData.length > 0 ? (
-            <ProductCardContainer productsData={wishListData} />
-          ) : (
-            <h4>لا يوجد منتجات مفضلة حاليا</h4>
-          )
-        }
-      </Row>
-    </section>
-  );
-};
 
-export default UserFavoriteList;
+
+  return [wishListData]
+}
+
+export default GetLoggedUserWishlistHook

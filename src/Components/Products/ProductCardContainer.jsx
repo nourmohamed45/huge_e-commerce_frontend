@@ -4,6 +4,9 @@ import ProductCard from "./ProductCard";
 
 // import Proptypes
 import PropTypes from "prop-types";
+import { ToastContainer } from "react-toastify";
+import GetLoggedUserWishlistHook from "../../Logic/wishlist/get-logged-user-wishlist-hook";
+
 
 const ProductCardContainer = ({
   productsData,
@@ -11,6 +14,9 @@ const ProductCardContainer = ({
   subtitlebtn,
   path,
 }) => {
+  
+  const [wishListData] = GetLoggedUserWishlistHook()
+
   return productsData ? (
     <Container>
       <SubTitle subtitle={subtitle} subtitlebtn={subtitlebtn} path={path} />
@@ -23,9 +29,12 @@ const ProductCardContainer = ({
             price={product.price}
             img={product.imageCover}
             rateAvg={product.ratingsAverage}
+            wishListData={wishListData} // Add wishListData to ProductCard component for wishlist functionality.
           />
         ))}
       </Row>
+      {/* Toast Notification */}
+      <ToastContainer />
     </Container>
   ) : null;
 };
