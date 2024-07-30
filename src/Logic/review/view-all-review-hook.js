@@ -35,7 +35,6 @@ const ViewAllReviewHook = () => {
     setLoading(true);
 
     try {
-      // Your form submission logic here
       await dispatch(getAllReviewsProduct(id, page, limit));
     } catch (error) {
       notify(error.response.data.message, "error");

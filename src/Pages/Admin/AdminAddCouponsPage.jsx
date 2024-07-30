@@ -14,6 +14,7 @@ const AdminAddCouponsPage = () => {
           <AdminAddCoupons />
         </Col>
       </Row>
+      
       {/* Notifications */}
       <ToastContainer />
     </Container>

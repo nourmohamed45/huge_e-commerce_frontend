@@ -1,6 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import deleteicon from "../../../assets/images/delete.png";
+import deleteIcon from "../../../assets/images/delete.png";
+import editIcon from "../../../assets/images/edit.png";
 
 const UserAddressCard = () => {
   return (
@@ -15,7 +16,7 @@ const UserAddressCard = () => {
               <img
                 alt="Edit icon"
                 className="ms-1 mt-2"
-                src={deleteicon}
+                src={editIcon}
                 height="17px"
                 width="15px"
               />
@@ -27,7 +28,7 @@ const UserAddressCard = () => {
               <img
                 alt="Delete icon"
                 className="ms-1 mt-2"
-                src={deleteicon}
+                src={deleteIcon}
                 height="17px"
                 width="15px"
                 aria-label="Delete address"

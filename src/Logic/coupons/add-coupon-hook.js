@@ -1,20 +1,24 @@
-import { useCallback, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import notify from "../useNotification";
-import { createCoupon } from "../../Redux/actions/couponsAction";
+import { createCoupon, getAllCoupons } from "../../Redux/actions/couponsAction";
 
 const AddCouponHook = () => {
+  const limitCouponsPerPage = 5;
   const dispatch = useDispatch();
+
+  const allCoupons = useSelector((state) => state.couponReducer.coupons);
+
   const [formData, setFormData] = useState({
     code: "",
     discount: "",
     expiryDate: "",
   });
   const [loading, setLoading] = useState(false);
-  const [isPress, setIsPress] = useState(false);
 
   const dateRef = useRef();
 
+  // Inputs Validation
   const validateCouponInputs = (formData) => {
     const errors = {};
 
@@ -42,6 +46,7 @@ const AddCouponHook = () => {
     return errors;
   };
 
+  // Handle Input in writing
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
 
@@ -49,12 +54,12 @@ const AddCouponHook = () => {
       ...prevData,
       [name]: value,
     }));
-
   }, []);
 
+  // Handle submit input fileds
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
 
     const errors = validateCouponInputs(formData);
 
@@ -69,7 +74,6 @@ const AddCouponHook = () => {
 
     try {
       setLoading(true);
-      setIsPress(true);
 
       // Await the dispatch promise
       await dispatch(
@@ -79,6 +83,9 @@ const AddCouponHook = () => {
           discount: formData.discount,
         })
       );
+      setTimeout(async () => {
+        await dispatch(getAllCoupons(limitCouponsPerPage, 1));
+      }, 500);
       notify("تم إضافة كوبون بنجاح", "success");
 
       // Clear form fields
@@ -89,10 +96,38 @@ const AddCouponHook = () => {
       });
 
       setLoading(false);
-      setIsPress(false);
     } catch (e) {
       notify(e.response.data.message, "error");
-      setIsPress(false);
+
+      if (e?.response.status === 400) {
+        notify(e.response.data.errors[0].msg, "error");
+      }
+      setLoading(false);
+    }
+  };
+
+  // Get All Coupons from Database
+  useEffect(() => {
+    const allcouponsAction = async () => {
+      try {
+        await dispatch(getAllCoupons(limitCouponsPerPage));
+      } catch (e) {
+        notify(e.response.data.message, "error");
+
+        if (e?.response.status === 400) {
+          notify(e.response.data.errors[0].msg, "error");
+        }
+      }
+    };
+    allcouponsAction();
+  }, [dispatch]);
+
+  // Get all coupons data by page
+  const onPress = async (page) => {
+    try {
+      await dispatch(getAllCoupons(limitCouponsPerPage, page));
+    } catch (e) {
+      notify(e.response.data.message, "error");
 
       if (e?.response.status === 400) {
         notify(e.response.data.errors[0].msg, "error");
@@ -100,14 +135,25 @@ const AddCouponHook = () => {
     }
   };
 
-  return {
+  // Get current page count
+  const pagination = useMemo(() => {
+    return allCoupons?.paginationResult || null;
+  }, [allCoupons]);
+
+  const pageCount = useMemo(() => {
+    return pagination?.numberOfPages || 0;
+  }, [pagination]);
+
+  return [
     formData,
     handleChange,
     handleSubmit,
     loading,
-    isPress,
     dateRef,
-  };
+    allCoupons,
+    onPress,
+    pageCount,
+  ];
 };
 
 export default AddCouponHook;
