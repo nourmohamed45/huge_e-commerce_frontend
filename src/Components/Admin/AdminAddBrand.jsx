@@ -16,7 +16,7 @@ const AdminAddBrand = () => {
 
   return (
     <section>
-      <h2 className="admin-content-text pb-4">اضف ماركه جديده</h2>
+      <h2 className="admin-content-text pb-4">أضف ماركة جديدة</h2>
 
       {isPress ? (
         loading ? (

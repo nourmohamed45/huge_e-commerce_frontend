@@ -49,6 +49,7 @@ const AdminSideBar = () => {
         <SidebarLink to="/admin/addcategory" label="اضف تصنيف" />
         <SidebarLink to="/admin/addsubcategory" label="اضف تصنيف فرعي" />
         <SidebarLink to="/admin/addproducts" label="اضف منتج" />
+        <SidebarLink to="/admin/addcoupons" label="اضف كوبون" />
       </div>
     </nav>
   );
