@@ -67,7 +67,7 @@ function App() {
           <Route path="/user/favoritelist" element={<UserFavoriteListPage />} />
           <Route path="/user/alladdresses" element={<UserAllAddressesPage />} />
           <Route path="/user/add-address" element={<UserAddAddressPage />} />
-          <Route path="/user/edit-address" element={<UserEditAddressPage />} />
+          <Route path="/user/edit-address/:id" element={<UserEditAddressPage />} />
           <Route path="/user/profile" element={<UserProfilePage />} />
           <Route path="/user/forgetPassword" element={<ForgetPasswordPage />} />
           <Route path="/user/verifyPassword" element={<VerifyPasswordPage />} />

@@ -1,6 +1,7 @@
 import { Col, Container, Row } from "react-bootstrap"
 import UserSideBar from "../../Components/User/UserSideBar"
 import UserAllAddresses from "../../Components/User/Address/UserAllAddresses"
+import { ToastContainer } from "react-toastify"
 
 const UserAllAddressesPage = () => {
   return (
@@ -13,6 +14,8 @@ const UserAllAddressesPage = () => {
           <UserAllAddresses />
         </Col>
       </Row>
+      {/* Notifications */}
+      <ToastContainer autoClose={2000} />
     </Container>
   )
 }

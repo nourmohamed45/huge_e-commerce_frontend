@@ -35,7 +35,7 @@ const RegisterHook = () => {
     if (!formData.phoneNumber.trim()) {
       errors.phoneNumber = "رقم الهاتف مطلوب";
     } else if (!/^(010|011|012|015)\d{4}\d{4}$/.test(formData.phoneNumber)) {
-      errors.phoneNumber = "رقم الهاتف غير صالح";
+      errors.phoneNumber = "أرقام هواتف مصرية فقط";
     }
     return errors;
   };

@@ -1,5 +1,5 @@
 import { Col, Row } from "react-bootstrap";
-import mobile from "../../assets/images/mobile.png";
+import mobile from "../../../assets/images/mobile.png";
 
 const UserAllOrderCard = () => {
   return (
