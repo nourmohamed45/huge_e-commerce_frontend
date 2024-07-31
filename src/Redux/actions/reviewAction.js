@@ -66,7 +66,7 @@ export const deleteSpecificReview = (id) => async (dispatch) => {
 }
 
 
-// Create a new review for a product
+// Update specific review for a specific product
 export const updateSpecificReview = (id, params) => async (dispatch) => {
 
   try {
