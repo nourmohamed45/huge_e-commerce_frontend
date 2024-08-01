@@ -4,7 +4,6 @@ import ProductCard from "./ProductCard";
 
 // import Proptypes
 import PropTypes from "prop-types";
-import { ToastContainer } from "react-toastify";
 import GetLoggedUserWishlistHook from "../../Logic/wishlist/get-logged-user-wishlist-hook";
 
 
@@ -33,8 +32,6 @@ const ProductCardContainer = ({
           />
         ))}
       </Row>
-      {/* Toast Notification */}
-      <ToastContainer />
     </Container>
   ) : null;
 };

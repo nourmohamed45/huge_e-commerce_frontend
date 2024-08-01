@@ -16,9 +16,9 @@ const GetLoggedUserWishlistHook = () => {
           setLoading(true);
           await dispatch(getAllProductFromWishList());
         } catch (error) {
-          notify(error.response.data.message, "error");
-          if (error?.response.status === 400) {
-            notify(error.response.data.errors[0].msg, "error");
+          notify(error.response?.data?.message || "An error occurred", "error");
+          if (error?.response?.status === 400) {
+            notify(error.response.data.errors[0]?.msg || "Invalid request", "error");
           }
         } finally {
           setLoading(false);
@@ -26,18 +26,21 @@ const GetLoggedUserWishlistHook = () => {
       };
       getAllWishListProduct();
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!loading && res.data) {
+    if (!loading && res?.data) {
       if (localStorage.getItem("token")) {
-        setWishListData(res.data.map((item) => item._id));
+        if (Array.isArray(res.data)) {
+          setWishListData(res.data.map((item) => item._id));
+        } else {
+          notify("Invalid data format received", "error");
+        }
       }
     }
-  }, [loading, res.data]);
+  }, [loading, res]);
 
+  return [wishListData];
+};
 
-  return [wishListData]
-}
-
-export default GetLoggedUserWishlistHook
+export default GetLoggedUserWishlistHook;

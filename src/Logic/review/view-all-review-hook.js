@@ -9,9 +9,10 @@ const ViewAllReviewHook = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [reviews, setReviews] = useState([]);
 
   // selector
-  const reviews = useSelector((state) => state.reviewReducer.allReviews);
+  const allReviews = useSelector((state) => state.reviewReducer.allReviews);
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -19,9 +20,9 @@ const ViewAllReviewHook = () => {
       try {
         await dispatch(getAllReviewsProduct(id, 1, limit));
       } catch (error) {
-        notify(error.response.data.message, "error");
-        if (error?.response.status === 400) {
-          notify(error.response.data.errors[0].msg, "error");
+        notify(error.response?.data?.message || "An error occurred", "error");
+        if (error?.response?.status === 400) {
+          notify(error.response.data.errors[0]?.msg || "Invalid request", "error");
         }
       } finally {
         setLoading(false);
@@ -31,15 +32,21 @@ const ViewAllReviewHook = () => {
     fetchReviews();
   }, [dispatch, id, limit]);
 
+  useEffect(() => {
+    if (!loading && allReviews) {
+      setReviews(allReviews);
+    }
+  }, [loading, allReviews]);
+
   const onPress = async (page) => {
     setLoading(true);
 
     try {
       await dispatch(getAllReviewsProduct(id, page, limit));
     } catch (error) {
-      notify(error.response.data.message, "error");
-      if (error?.response.status === 400) {
-        notify(error.response.data.errors[0].msg, "error");
+      notify(error.response?.data?.message || "An error occurred", "error");
+      if (error?.response?.status === 400) {
+        notify(error.response.data.errors[0]?.msg || "Invalid request", "error");
       }
     } finally {
       setLoading(false);

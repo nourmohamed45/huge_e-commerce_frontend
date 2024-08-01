@@ -21,6 +21,11 @@ const RateItem = ({ review }) => {
     handleReviewValueChangeEdit,
   ] = EditRateHook(review);
 
+  // Check if review or review.user is null/undefined
+  if (!review || !review.user) {
+    return null; // Or return a placeholder/loading component
+  }
+
   return (
     <>
       {/* Delete Modal Component */}
@@ -122,7 +127,14 @@ const RateItem = ({ review }) => {
 };
 
 RateItem.propTypes = {
-  review: PropTypes.object.isRequired,
+  review: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    user: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
+    rating: PropTypes.number.isRequired,
+    review: PropTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default RateItem;

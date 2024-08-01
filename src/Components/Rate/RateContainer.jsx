@@ -14,6 +14,8 @@ const RateContainer = ({ ratingCount }) => {
   const { id } = useParams();
   const [items, , , , ] = ViewProductDetailsHook(id);
   const [loading, reviews, onPress] = ViewAllReviewHook();
+
+  // console.log(reviews)
   
   return (
     <Container className="rate-container">

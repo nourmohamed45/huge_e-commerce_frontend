@@ -1,5 +1,5 @@
 import useDeleteData from "../../Hooks/useDeleteData"
-import { useGetDataToken } from "../../Hooks/useGetData"
+import useGetData from "../../Hooks/useGetData"
 import { useInsertData } from "../../Hooks/useInsertData"
 import { useUpdateData } from "../../Hooks/useUpdateData"
 import { ALL_REVIEWS_PRODUCT, CREATE_REVIEW, DELETE_SPECIFIC_REVIEW, UPDATE_SPECIFIC_REVIEW } from "../type"
@@ -29,7 +29,7 @@ export const createReview = (id, params) => async (dispatch) => {
 export const getAllReviewsProduct = (id, page, limit) => async (dispatch) => {
 
   try {
-  const response = await useGetDataToken(`/api/v1/products/${id}/reviews?page=${page}&limit=${limit}`)
+  const response = await useGetData(`/api/v1/products/${id}/reviews?page=${page}&limit=${limit}`)
   dispatch({
     type: ALL_REVIEWS_PRODUCT,
     payload: response,
