@@ -1,10 +1,14 @@
-import { Col, Row } from "react-bootstrap";
+import { Col, Row, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import ViewProductDetailsHook from "../../Logic/product/view-product-details-hook";
+import AddToCartHook from "../../Logic/cart/add-to-cart-hook";
 
 const ProductText = () => {
   const { id } = useParams();
   const [items, , , categoryData, brandData] = ViewProductDetailsHook(id);
+
+  const [loading, choosenColor, colorClick, , handleAddToCart] =
+    AddToCartHook(id, items);
 
   return (
     <section>
@@ -51,9 +55,13 @@ const ProductText = () => {
           {items.availableColors
             ? items?.availableColors?.map((color, index) => (
                 <div
+                  onClick={() => colorClick(index, color)}
                   key={index}
-                  className="color ms-2 border"
-                  style={{ backgroundColor: color }}
+                  className="color ms-2"
+                  style={{
+                    backgroundColor: color,
+                    border: choosenColor === index ? "3px solid black" : "none",
+                  }}
                   aria-label="Color red"
                 ></div>
               ))
@@ -82,8 +90,13 @@ const ProductText = () => {
           <button
             className="product-cart-add px-3 py-3 d-inline mx-3"
             aria-label="Add to cart"
+            onClick={handleAddToCart}
           >
-            اضف للعربة
+            {loading ? (
+              <Spinner animation="border" variant="primary" />
+            ) : (
+              "اضف للعربة"
+            )}
           </button>
         </Col>
       </Row>

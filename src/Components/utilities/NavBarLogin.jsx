@@ -4,11 +4,14 @@ import login from "../../assets/images/login.png";
 import cart from "../../assets/images/cart.png";
 import NavbarSearchHook from "../../Logic/search/navbar-search-hook";
 import NavbarLoginHook from "../../Logic/auth/navbar-login-hook";
+import GetLoggedUserCartHook from "../../Logic/cart/get-logged-user-cart-hook";
 
 const NavBarLogin = () => {
   const [, onChangeSearch, word] = NavbarSearchHook();
 
   const { user, logOut } = NavbarLoginHook();
+
+  const [, , itemsNumber] = GetLoggedUserCartHook();
 
   return (
     <Navbar
@@ -34,7 +37,7 @@ const NavBarLogin = () => {
             id="navBarSearchForm"
           />
           <Nav
-            className="me-auto d-flex flex-row justify-content-center gap-3 mt-3 mt-md-0"
+            className="me-auto d-flex flex-row justify-content-center align-items-center gap-1 mt-3 mt-md-0"
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
@@ -66,8 +69,22 @@ const NavBarLogin = () => {
               href="/cart"
               className="nav-text d-flex justify-content-center align-items-center"
             >
-              <img src={cart} alt="Cart Img" className="login-img ms-2" />
-              <p style={{ marginBottom: "0px" }}>العربة</p>
+              <button
+                style={{
+                  marginBottom: "0px",
+                  background: "transparent",
+                  color: "white",
+                  border: "none",
+                }}
+                className="btn position-relative d-flex"
+              >
+                <img src={cart} alt="Cart Img" className="login-img ms-2" />
+                العربة{" "}
+                <span className="position-absolute top-0 start-0 translate-middle badge bg-danger text-white rounded-pill">
+                  {itemsNumber || 0} {" "}
+                  <span className="visually-hidden">unread messages</span>
+                </span>
+              </button>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
