@@ -1,19 +1,32 @@
-import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { getAllCategory, getAllCategoryPage } from '../../Redux/actions/categoryActions';
+import { useCallback, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCategory, getAllCategoryPage } from "../../Redux/actions/categoryActions";
 
-const AllCategoryPageHook = () => {
-  const categoryLimit = 6;
+const AllCategoryPageHook = (categoryLimit) => {
   const dispatch = useDispatch();
-
-  // to get state from redux
-  const category = useSelector((state) => state.allCategory.category);
-  const loading = useSelector((state) => state.allCategory.loading);
   
-  // when first load
+  const allCategory = useSelector((state) => state.allCategory.category);
+  const loading = useSelector((state) => state.allCategory.loading);
+  const [category, setCategory] = useState([]);
+
+  const getAllProductsByCategory = useCallback(async () => {
+    try {
+      await dispatch(getAllCategory(categoryLimit));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  }, [dispatch, categoryLimit]);
+
   useEffect(() => {
-    dispatch(getAllCategory(categoryLimit));
-  }, [dispatch]);
+    getAllProductsByCategory();
+  }, [getAllProductsByCategory]);
+
+  useEffect(() => {
+    if (allCategory?.data) {
+      // Filter categories if needed
+      setCategory(allCategory);
+    }
+  }, [allCategory, categoryLimit]);
 
   // to get page count
   let pageCount = 0;
@@ -25,7 +38,11 @@ const AllCategoryPageHook = () => {
     dispatch(getAllCategoryPage(categoryLimit, page));
   };
 
-  return [category, loading, pageCount, getPage]
-}
+  // useEffect(() => {
+  //   console.log("Category:", pageCount);
+  // }, [pageCount]);
 
-export default AllCategoryPageHook
+  return [category, loading, pageCount, getPage];
+};
+
+export default AllCategoryPageHook;

@@ -16,7 +16,7 @@ const HomeProductHook = (productsLimit) => {
 
   let items = [];
 
-  if (allProductsData.data) {
+  if (allProductsData?.data) {
     items = allProductsData;
   } else {
     items = [];

@@ -11,11 +11,13 @@ export const getAllCategory = (limit) => async (dispatch) => {
     dispatch({
       type: GET_ALL_CATEGORY,
       payload: response,
+      loading: true,
     });
   } catch (e) {
     dispatch({
       type: GET_ERROR,
       payload: 'Error: ' + e.message,
+      loading: true,
     });
   }
 };

@@ -3,8 +3,9 @@ import { Col } from "react-bootstrap";
 
 // import Prototype
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const CategoryCard = ({ img, background, title }) => {
+const CategoryCard = ({ background, img, title, id }) => {
   return (
     <Col
       xs="6"
@@ -18,8 +19,10 @@ const CategoryCard = ({ img, background, title }) => {
           className="category-card"
           style={{ backgroundColor: `${background}` }}
         ></div>{" "}
-        <img src={img} alt="Category Img" className="category-card-img" />
-        <p className="category-card-text my-2">{title}</p>
+        <Link to={`/products/category/${id}`} style={{textDecoration: "none"}}>
+          <img src={img} alt="Category Img" className="category-card-img" />
+          <p className="category-card-text my-2">{title}</p>
+        </Link>
       </div>
     </Col>
   );
@@ -31,4 +34,5 @@ CategoryCard.propTypes = {
   img: PropTypes.string,
   background: PropTypes.string,
   title: PropTypes.string,
+  id: PropTypes.string,
 };

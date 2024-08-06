@@ -3,6 +3,7 @@ import { useEffect } from "react";
 
 // Redux
 import { useDispatch, useSelector } from "react-redux";
+// import { getAllCategory } from "../../redux/actions/categoryActions";
 import { getAllCategory } from "../../Redux/actions/categoryActions";
 
 const HomeCategoryHook = () => {

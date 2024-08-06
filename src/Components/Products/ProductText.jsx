@@ -7,8 +7,10 @@ const ProductText = () => {
   const { id } = useParams();
   const [items, , , categoryData, brandData] = ViewProductDetailsHook(id);
 
-  const [loading, choosenColor, colorClick, , handleAddToCart] =
-    AddToCartHook(id, items);
+  const [loading, choosenColor, colorClick, , handleAddToCart] = AddToCartHook(
+    id,
+    items
+  );
 
   return (
     <section>
@@ -68,6 +70,12 @@ const ProductText = () => {
             : null}
         </Col>
       </Row>
+      <Row>
+        <Col md={8} className="mt-3 d-flex">
+          <span className="cat-text d-inline">الكمية المتاحة: </span>{" "}
+          {items?.quantity}
+        </Col>
+      </Row>
       {/* ========== Description ========== */}
       <Row className="mt-4">
         <header className="cat-text">المواصفات :</header>
@@ -85,7 +93,19 @@ const ProductText = () => {
             className="product-price d-inline px-3 py-3 border"
             aria-label="Price"
           >
-            {items.price} جنيه
+            {items?.priceAfterDiscount >= 1 ? (
+              <>
+                <span
+                  style={{ textDecoration: "line-through", fontSize: "15px" }}
+                >
+                  {items?.price}
+                </span>{" "}
+                {items?.priceAfterDiscount}
+              </>
+            ) : (
+              items?.price
+            )}{" "}
+            جنيه
           </p>
           <button
             className="product-cart-add px-3 py-3 d-inline mx-3"

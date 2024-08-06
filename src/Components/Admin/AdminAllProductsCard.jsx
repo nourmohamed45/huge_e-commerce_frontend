@@ -101,7 +101,19 @@ const AdminAllProductsCard = ({ productCardData }) => {
                   </div>
                 </div>
                 <div className="d-flex">
-                  <div className="card-price">{productCardData.price}</div>
+                  <div className="card-price">
+                  {productCardData.priceAfterDiscount >= 1 ? (
+                    <>
+                      <span style={{ textDecoration: "line-through", fontSize:"16px" }}>
+                        {productCardData.price}
+                      </span>
+                      {" "}
+                      {productCardData.priceAfterDiscount}
+                    </>
+                  ) : (
+                    productCardData.price
+                  )}
+                  </div>
                   <div className="card-currency mx-1">جنيه</div>
                 </div>
               </div>

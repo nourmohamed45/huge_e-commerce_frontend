@@ -5,13 +5,15 @@ import AllCategoryPageHook from "../../Logic/category/all-category-page-hook";
 
 
 const AllCategoryPage = () => {
+  const categoryLimit = 9;
   
-  const [category, loading, pageCount, getPage] = AllCategoryPageHook();
+  const [category, loading, pageCount, getPage] = AllCategoryPageHook(categoryLimit);
+
 
   return (
     <Container style={{ minHeight: "460px" }}>
       <h4 className="admin-content-text pe-3 mt-5">كل التصنيفات</h4>
-      <CategoryContainer categoryData={category.data} loading={loading} />
+      <CategoryContainer categoryData={category?.data} loading={loading} />
       {pageCount < 2 ? (
         ""
       ) : (

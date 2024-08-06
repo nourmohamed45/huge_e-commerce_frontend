@@ -1,8 +1,9 @@
 import { Card, Col } from "react-bootstrap";
 
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const BrandCard = ({ img }) => {
+const BrandCard = ({ img, id, brandName }) => {
   return (
     <Col
       xs="6"
@@ -21,7 +22,10 @@ const BrandCard = ({ img }) => {
           backgroundColor: "#FFFFFF",
         }}
       >
-        <Card.Img style={{ width: "100%", height: "inherit" }} src={img} />
+        <Link to={`/products/brand/${id}`}>
+          <Card.Img style={{ width: "100%", height: "inherit" }} src={img} />
+        </Link>
+        <span>{brandName}</span>
       </Card>
     </Col>
   );
@@ -31,4 +35,6 @@ export default BrandCard;
 
 BrandCard.propTypes = {
   img: PropTypes.string,
+  id: PropTypes.string,
+  brandName: PropTypes.string,
 };

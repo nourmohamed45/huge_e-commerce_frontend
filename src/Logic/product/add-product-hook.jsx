@@ -147,7 +147,7 @@ const AddProductHook = () => {
     if (categoryID.length > 0) {
       dispatch(getSubcategoriesByCategory(categoryID));
     }
-  }, [categoryID]);
+  }, [dispatch, categoryID]);
 
   // Handle subcategory selection and remove subCategory
   const onSelectSubCategory = (selectedList) => {
@@ -303,6 +303,7 @@ const AddProductHook = () => {
     formData.append("description", productDescription);
     formData.append("quantity", quantityAvailable);
     formData.append("price", priceBeforeDiscount);
+    formData.append("priceAfterDiscount", priceAfterDiscount);
     formData.append("category", categoryID);
     formData.append("brand", brandID);
 

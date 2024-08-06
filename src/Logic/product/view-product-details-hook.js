@@ -28,17 +28,17 @@ const ViewProductDetailsHook = (id) => {
   // For sure that the product data is available
 
   const items = useMemo(
-    () => specialProductData.data || [],
-    [specialProductData.data]
+    () => specialProductData?.data || [],
+    [specialProductData?.data]
   );
 
   // For Store images data when it is available
   const images = useMemo(() => {
-    if (items.images && items.images.length > 0) {
+    if (items?.images && items?.images?.length > 0) {
       return items.images.map((image) => ({ original: image }));
     }
     return [{ original: noImageAvailable }];
-  }, [items.images]);
+  }, [items?.images]);
 
   // For Store category data when it is available
   const categoryData = useMemo(
@@ -54,8 +54,8 @@ const ViewProductDetailsHook = (id) => {
 
   // For Store products by category data when it is available
   const productsByCategoryData = useMemo(
-    () => specialProductsByCategoryData.data || [],
-    [specialProductsByCategoryData.data]
+    () => specialProductsByCategoryData?.data || [],
+    [specialProductsByCategoryData?.data]
   );
 
   const productsData = useMemo(() => {

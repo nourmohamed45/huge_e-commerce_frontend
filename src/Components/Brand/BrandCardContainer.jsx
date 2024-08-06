@@ -26,7 +26,7 @@ const BrandCardContainer = ({ subtitle, subtitlebtn }) => {
           <Spinner className="m-auto" animation="border" variant="primary" />
         ) : brands && brands.data && brands.data.length > 0 ? (
           brands.data.slice(0, 6).map((item) => (
-            <BrandCard key={item._id} img={item.image} />
+            <BrandCard key={item._id} brandName={item.name} img={item.image} id={item._id} />
           ))
         ) : (
           <h4>لا يوجد ماركات</h4>

@@ -21,6 +21,7 @@ const HomeCategory = () => {
                 background={color[index]} // Assign random background color
                 img={category.image}
                 title={category.name}
+                id={category._id}
               />
             ))
           ) : (

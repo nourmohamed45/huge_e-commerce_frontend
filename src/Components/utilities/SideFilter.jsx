@@ -5,7 +5,7 @@ const SideFilter = () => {
   const [
     category,
     brand,
-    loading,
+    ,
     handleCheckCategory,
     handleCheckBrand,
     categoryChecked,

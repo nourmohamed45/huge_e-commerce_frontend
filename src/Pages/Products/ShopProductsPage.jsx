@@ -21,7 +21,7 @@ const ShopProductsPage = () => {
             <Col xs="10" sm="10" md="11">
               {items.results > 0 ? (
                 <ProductCardContainer
-                  productsData={items.data}
+                  productsData={items?.data}
                   title=""
                   subtitlebtn=""
                 />

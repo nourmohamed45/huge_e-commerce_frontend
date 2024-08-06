@@ -11,7 +11,15 @@ import { webBaseURL } from "../../Api/baseURL";
 
 // Import constants
 
-const ProductCard = ({ id, title, price, img, rateAvg, wishListData }) => {
+const ProductCard = ({
+  id,
+  title,
+  price,
+  priceAfterDiscount,
+  img,
+  rateAvg,
+  wishListData,
+}) => {
   const [isFavorite, handleFav] = AddRemoveFromWishlistHook(id, wishListData);
 
   return (
@@ -69,7 +77,19 @@ const ProductCard = ({ id, title, price, img, rateAvg, wishListData }) => {
                 <div className="card-rate mx-2">{rateAvg || 0}</div>
               </div>
               <div className="d-flex">
-                <div className="card-price">{price}</div>
+                <div className="card-price">
+                  {priceAfterDiscount >= 1 ? (
+                    <>
+                      <span style={{ textDecoration: "line-through", fontSize:"16px" }}>
+                        {price}
+                      </span>
+                      {" "}
+                      {priceAfterDiscount}
+                    </>
+                  ) : (
+                    price
+                  )}
+                </div>
                 <div className="card-currency mx-1">جنيه</div>
               </div>
             </div>
@@ -84,6 +104,7 @@ ProductCard.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
+  priceAfterDiscount: PropTypes.number,
   img: PropTypes.string.isRequired,
   rateAvg: PropTypes.number,
   wishListData: PropTypes.array.isRequired,

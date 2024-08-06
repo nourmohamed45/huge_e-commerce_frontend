@@ -26,6 +26,7 @@ const ProductCardContainer = ({
             id={product._id}
             title={product.title}
             price={product.price}
+            priceAfterDiscount={product.priceAfterDiscount}
             img={product.imageCover}
             rateAvg={product.ratingsAverage}
             wishListData={wishListData} // Add wishListData to ProductCard component for wishlist functionality.

@@ -4,13 +4,14 @@ import BrandCard from "./BrandCard";
 import PropTypes from "prop-types";
 
 const BrandPageContainer = ({ brandData, loading }) => {
+  
   return (
     <Container className="mt-0">
       <Row className="my-2 d-flex justify-content-start">
         {loading === false ? (
           brandData ? (
             brandData.map((brand) => (
-              <BrandCard key={brand._id} img={brand.image} />
+              <BrandCard key={brand._id} brandName={brand.name} img={brand.image} id={brand._id} />
             ))
           ) : null
         ) : (

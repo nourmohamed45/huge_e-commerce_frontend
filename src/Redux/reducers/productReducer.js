@@ -2,6 +2,8 @@ import {
   CREATE_PRODUCT,
   DELETE_PRODUCT,
   GET_ALL_PRODUCTS,
+  GET_ALL_PRODUCTS_BY_BRAND,
+  GET_ALL_PRODUCTS_BY_CATEGORY,
   GET_ERROR,
   GET_PRODUCTS_BY_CATEGORY,
   GET_SPECIAL_PRODUCT,
@@ -15,6 +17,8 @@ const initial = {
   productByCategory: [],
   deleteProduct: [],
   updateProduct: [],
+  allProductsByCategory: [],
+  allProductsByBrand: [],
   error: [],
   loading: true,
 };
@@ -59,6 +63,17 @@ const productReducer = (state = initial, action) => {
     case GET_ERROR:
       return {
         error: action.payload,
+        loading: false,
+      }
+    case GET_ALL_PRODUCTS_BY_CATEGORY:
+      return {
+        ...state,
+        allProductsByCategory: action.payload,
+        loading: false,
+      }
+    case GET_ALL_PRODUCTS_BY_BRAND:
+      return {
+        allProductsByBrand: action.payload,
         loading: false,
       }
     default:

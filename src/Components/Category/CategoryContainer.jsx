@@ -10,12 +10,13 @@ const CategoryContainer = ({ categoryData, loading }) => {
       <Row className="my-2 d-flex justify-content-start">
         {loading === false ? (
           categoryData ? (
-            categoryData.map((category, index) => (
+            categoryData?.map((category, index) => (
               <CategoryCard
                 key={category._id}
                 background={colors[index % colors.length]} // Assign random background color
                 img={category.image}
                 title={category.name}
+                id={category._id}
               />
             ))
           ) : (

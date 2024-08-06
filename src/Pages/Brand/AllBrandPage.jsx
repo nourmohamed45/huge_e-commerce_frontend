@@ -10,7 +10,7 @@ const AllBrandPage = () => {
   return (
     <Container style={{ minHeight: "460px" }}>
       <h4 className="admin-content-text pe-3 mt-5">كل الماركات:</h4>
-      <BrandPageContainer brandData={brand.data} loading={loading} />
+      <BrandPageContainer brandData={brand?.data} loading={loading} />
       {pageCount < 2 ? (
         ""
       ) : (

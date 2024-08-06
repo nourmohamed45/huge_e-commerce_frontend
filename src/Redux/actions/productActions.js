@@ -2,7 +2,7 @@ import useDeleteData from "../../Hooks/useDeleteData";
 import useGetData from "../../Hooks/useGetData";
 import { useInsertDataWithImage } from "../../Hooks/useInsertData";
 import { useUpdateDataWithImage } from "../../Hooks/useUpdateData";
-import { CREATE_PRODUCT, DELETE_PRODUCT, GET_ALL_PRODUCTS, GET_ERROR, GET_PRODUCTS_BY_CATEGORY, GET_SPECIAL_PRODUCT, UPDATE_PRODUCT } from "../type";
+import { CREATE_PRODUCT, DELETE_PRODUCT, GET_ALL_PRODUCTS, GET_ALL_PRODUCTS_BY_BRAND, GET_ALL_PRODUCTS_BY_CATEGORY, GET_ERROR, GET_PRODUCTS_BY_CATEGORY, GET_SPECIAL_PRODUCT, UPDATE_PRODUCT } from "../type";
 
 // Create a new product with images upload
 export const createProduct = (formData) => async (dispatch) => {
@@ -156,5 +156,44 @@ export const updateProduct = (productId, formData) => async (dispatch) => {
       loading: true,
     });
     throw e;
+  }
+}
+
+
+// Get products by special category
+
+export const getAllProductsByCategory = (categoryId, page, limit) => async (dispatch) => {
+  try {
+    const response = await useGetData(`/api/v1/products?category=${categoryId}&limit=${limit}&page=${page}`);
+    dispatch({
+      type: GET_ALL_PRODUCTS_BY_CATEGORY,
+      payload: response,
+      loading: true,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_PRODUCTS_BY_CATEGORY,
+      payload: error.response,
+    })
+    throw error;
+  }
+}
+
+// Get products by special category
+
+export const getAllProductsByBrand = (brandId, page, limit) => async (dispatch) => {
+  try {
+    const response = await useGetData(`/api/v1/products?brand=${brandId}&limit=${limit}&page=${page}`);
+    dispatch({
+      type: GET_ALL_PRODUCTS_BY_BRAND,
+      payload: response,
+      loading: true,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_ALL_PRODUCTS_BY_BRAND,
+      payload: error.response,
+    })
+    throw error;
   }
 }
