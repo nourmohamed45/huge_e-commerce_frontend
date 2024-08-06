@@ -125,3 +125,14 @@ export const UPDATE_CART_ITEM_COUNT = "UPDATE_CART_ITEM_COUNT"
 export const CLEAR_CART = "CLEAR_CART"
 
 export const APPLY_COUPON = "APPLY_COUPON"
+
+
+// Checkout
+
+export const CREATE_ORDER_CASH = "CREATE_ORDER_CASH"
+
+
+
+// Orders
+
+export const GET_ALL_ORDERS = "GET_ALL_ORDERS"

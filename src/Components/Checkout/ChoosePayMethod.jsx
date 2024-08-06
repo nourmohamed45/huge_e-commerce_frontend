@@ -1,7 +1,20 @@
-import { Col, Row } from "react-bootstrap";
-
+import { Col, Row, Spinner } from "react-bootstrap";
+import ViewAddressHook from "../../Logic/user/view-address-hook";
+import OrderPaymentCashHook from "../../Logic/checkout/order-payment-cash-hook";
 
 const ChoosePayMethod = () => {
+  const [allAddress] = ViewAddressHook();
+
+  const [
+    ,
+    handleChangeSelection,
+    addressDetails,
+    handleCreateOrderCash,
+    orderLoading
+  ] = OrderPaymentCashHook();
+
+  if(addressDetails.length !== 0)
+    console.log(addressDetails)
   return (
     <>
       <h3
@@ -13,7 +26,7 @@ const ChoosePayMethod = () => {
       <section className="user-address-card my-3 px-3">
         <Row className="d-flex justify-content-between">
           <Col xs="12" className="my-4">
-            <div className="custom-radio">
+            <div className="custom-radio" style={{ cursor: "pointer" }}>
               <input
                 name="group"
                 id="group1"
@@ -28,7 +41,7 @@ const ChoosePayMethod = () => {
 
         <Row className="mt-3">
           <Col xs="12" className="d-flex">
-            <div className="custom-radio">
+            <div className="custom-radio" style={{ cursor: "pointer" }}>
               <input
                 name="group"
                 id="group2"
@@ -40,13 +53,48 @@ const ChoosePayMethod = () => {
             </div>
           </Col>
         </Row>
+
+        <Row className="mt-3">
+          <Col xs="12" sm={8} md={6} lg="4" className="d-flex">
+            <select
+              id="addresses-select"
+              name="addresses"
+              className="select mt-3 px-2"
+              aria-label="إختر التصنيف الرئيسي"
+              onChange={handleChangeSelection}
+              defaultValue={"default"}
+            >
+              <option value="default" disabled>
+                إختر عنوان للشحن
+              </option>
+              {allAddress?.data?.length > 0 ? (
+                allAddress.data.map((address) => (
+                  <option key={address._id} value={address._id}>
+                    {address.alias}
+                  </option>
+                ))
+              ) : (
+                <option disabled>لا توجد تصنيفات متاحة</option>
+              )}
+            </select>
+          </Col>
+        </Row>
       </section>
 
       <Row>
         <Col xs="12" className="d-flex justify-content-end">
           <div className="product-price d-inline border">34000 جنية</div>
-          <button className="product-cart-add px-3 pt-0 d-inline me-2">
-            اتمام الشراء
+          <button
+            onClick={handleCreateOrderCash}
+            className="product-cart-add px-3 pt-0 d-inline me-2"
+            style={{ cursor: "pointer" }}
+          >
+            {orderLoading? (
+              <Spinner animation="border" variant="primary" />
+            ) : (
+              "اتمام الشراء"
+            )}
+            
           </button>
         </Col>
       </Row>

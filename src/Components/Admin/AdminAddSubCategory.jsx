@@ -52,9 +52,7 @@ const AdminAddSubCategory = () => {
                 <option value="default" disabled>
                   إختر التصنيف الرئيسي
                 </option>
-                {categoryData &&
-                categoryData.data &&
-                categoryData.data.length > 0 ? (
+                { categoryData?.data?.length > 0 ? (
                   categoryData.data.map((category) => (
                     <option key={category._id} value={category._id}>
                       {category.name}

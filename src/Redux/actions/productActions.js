@@ -89,6 +89,7 @@ export const getProductDetails = (id) => async (dispatch) => {
       payload: response,
       loading: true,
     })
+    return response;
   } catch (e) {
     dispatch({
       type: GET_ERROR,

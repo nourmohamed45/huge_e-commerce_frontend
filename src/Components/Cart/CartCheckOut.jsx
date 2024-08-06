@@ -1,11 +1,11 @@
 import { Col, Row, Spinner } from "react-bootstrap";
-import { Link } from "react-router-dom";
 
 import PropTypes from "prop-types";
 import DeleteCartHook from "../../Logic/cart/delete-cart-hook";
 import ApplyCouponHook from "../../Logic/cart/apply-coupon-hook";
+import HandleCheckoutHook from "../../Logic/checkout/handle-checkout-hook";
 
-const CartCheckOut = ({ totalCartPrice }) => {
+const CartCheckOut = ({ cartItems, totalCartPrice }) => {
   const [loading, handleDeleteCart] = DeleteCartHook();
 
   const [
@@ -17,6 +17,8 @@ const CartCheckOut = ({ totalCartPrice }) => {
     priceAfterCoupon,
     couponName,
   ] = ApplyCouponHook();
+
+  const [handleCheckout] = HandleCheckoutHook(cartItems)
   return (
     <Row className="my-1 d-flex justify-content-center cart-checkout pt-3">
       <Col xs="12" className="d-flex  flex-column  ">
@@ -26,7 +28,9 @@ const CartCheckOut = ({ totalCartPrice }) => {
           </label>
           <input
             value={couponCode}
-            onChange={(e) => {handleCouponChange(e.target.value)}}
+            onChange={(e) => {
+              handleCouponChange(e.target.value);
+            }}
             id="coupon-code"
             className="copon-input d-inline text-center "
             placeholder="كود الخصم"
@@ -47,7 +51,10 @@ const CartCheckOut = ({ totalCartPrice }) => {
         <div className="product-price d-inline w-100 my-3 border">
           {couponName ? (
             <>
-              <span style={{textDecoration: "line-through"}}>{totalPriceBeforeCoupon}</span> {"-"} {priceAfterCoupon}
+              <span style={{ textDecoration: "line-through" }}>
+                {totalPriceBeforeCoupon}
+              </span>{" "}
+              {"-"} {priceAfterCoupon}
             </>
           ) : totalCartPrice && totalCartPrice !== 0 ? (
             totalCartPrice
@@ -56,32 +63,26 @@ const CartCheckOut = ({ totalCartPrice }) => {
           )}{" "}
           جنية
         </div>
-        <Link
-          to="/order/paymethods"
-          style={{ textDecoration: "none" }}
-          className="product-cart-add  d-inline mx-auto"
-        >
+        
           <button
+            onClick={handleCheckout}
             className="product-cart-add w-100 px-2 "
             aria-label="Proceed to purchase"
           >
             {" "}
             شراء
           </button>
-        </Link>
 
         <button
           onClick={handleDeleteCart}
-          className="product-cart-remove mx-auto my-2 px-2 "
+          className="product-cart-remove w-100 mx-auto my-2 px-2 "
           aria-label="Proceed to purchase"
         >
           {" "}
           {loading ? (
-            <span
-              className="spinner-border spinner-border-sm mr-1"
-              role="status"
-              aria-hidden="true"
-            />
+            <span className="spinner-border spinner-border-sm mr-1">
+              <output aria-hidden="true"></output>
+            </span>
           ) : (
             "مسح العربة"
           )}
@@ -94,5 +95,6 @@ const CartCheckOut = ({ totalCartPrice }) => {
 export default CartCheckOut;
 
 CartCheckOut.propTypes = {
+  cartItems: PropTypes.array,
   totalCartPrice: PropTypes.number,
 };

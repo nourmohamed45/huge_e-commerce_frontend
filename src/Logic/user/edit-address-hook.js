@@ -24,9 +24,9 @@ const EditAddressHook = (id) => {
   const [loading, setLoading] = useState(false);
   const [loadingData, setLoadingData] = useState(true);
 
-  // Get Specific Coupon data to show it in input fields
+  // Get Specific Address data to show it in input fields
   useEffect(() => {
-    const getSpecificCouponData = async () => {
+    const getSpecificAddressData = async () => {
       try {
         setLoadingData(true);
         await dispatch(getSpecificAddress(id));
@@ -39,10 +39,10 @@ const EditAddressHook = (id) => {
         setLoadingData(false);
       }
     };
-    getSpecificCouponData();
+    getSpecificAddressData();
   }, [dispatch, id]);
 
-  // Enter previous coupon data into field
+  // Enter previous Address data into field
   useEffect(() => {
     if (specificAddress?.data) {
       setFormData({
@@ -99,7 +99,6 @@ const EditAddressHook = (id) => {
   // Handle submit input fileds
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // setLoading(true);
 
     const errors = validateAddressInputs(formData);
 

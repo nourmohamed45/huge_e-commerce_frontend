@@ -37,7 +37,7 @@ import ProductByCategoryPage from "./Pages/Products/ProductByCategoryPage";
 import ProductByBrandPage from "./Pages/Products/ProductByBrandPage";
 
 function App() {
-  const [isUser, isAdmin, ] = ProtectedRouteHook();
+  const [isUser, isAdmin] = ProtectedRouteHook();
   return (
     <div className="font">
       <NavBarLogin />
@@ -53,9 +53,11 @@ function App() {
           <Route path="/allBrand" element={<AllBrandPage />} />
           <Route path="/products" element={<ShopProductsPage />} />
           <Route path="/product/:id" element={<ProductDetailsPage />} />
-          <Route path="/order/paymethods" element={<ChoosePayMethodPage />} />
           {/* Other Pages */}
-          <Route path="/products/category/:id" element={<ProductByCategoryPage />} />
+          <Route
+            path="/products/category/:id"
+            element={<ProductByCategoryPage />}
+          />
           <Route path="/products/brand/:id" element={<ProductByBrandPage />} />
           {/* Admin Pages */}
           <Route element={<ProtectedRoute auth={isAdmin} />}>
@@ -108,6 +110,7 @@ function App() {
               element={<UserEditAddressPage />}
             />
             <Route path="/user/profile" element={<UserProfilePage />} />
+            <Route path="/order/paymethods" element={<ChoosePayMethodPage />} />
           </Route>
           <Route path="/user/forgetPassword" element={<ForgetPasswordPage />} />
           <Route path="/user/verifyPassword" element={<VerifyPasswordPage />} />

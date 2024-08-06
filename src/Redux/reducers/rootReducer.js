@@ -10,6 +10,8 @@ import couponReducer from "./couponReducer";
 import userAddressReducer from "./userAddressReducer";
 import userProfileReducer from "./userProfileReducer";
 import cartReducer from "./cartReducer";
+import checkoutReducer from "./checkoutReducer";
+import orderReducer from "./orderReducer";
 
 export default combineReducers({
   allCategory: categoryReducer,
@@ -23,4 +25,6 @@ export default combineReducers({
   userAddressReducer: userAddressReducer,
   userProfileReducer: userProfileReducer,
   cartReducer: cartReducer,
+  checkoutReducer: checkoutReducer,
+  orderReducer: orderReducer,
 });

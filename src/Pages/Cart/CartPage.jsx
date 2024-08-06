@@ -19,14 +19,14 @@ const CartPage = () => {
             <Spinner animation="border" variant="primary" />
           ) : (
             cartItems && cartItems.length >= 1 ? (
-              cartItems.map((item) => <CartItem key={item.product._id} item={item} />)
+              cartItems.map((item) => <CartItem key={item.product._id} quantity={item.product.quantity} item={item} />)
             ) : (
               <h4>العربة لا تحتوي علي منتجات</h4>
             )
           )}
         </Col>
         <Col xs="12" md="3" className="d-flex justify-content-center mt-md-3">
-          <CartCheckOut totalCartPrice={totalCartPrice}/>
+          <CartCheckOut cartItems={cartItems} totalCartPrice={totalCartPrice}/>
         </Col>
       </Row>
       {/* Notifications */}

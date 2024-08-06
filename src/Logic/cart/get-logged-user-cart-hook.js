@@ -8,8 +8,9 @@ const GetLoggedUserCartHook = () => {
   const [loading, setLoading] = useState(true);
   const [itemsNumber, setItemsNumber] = useState(0);
   const [cartItems, setCartItems] = useState([]);
-  const [totalCartPrice, setTotalCartPrice] = useState(0)
-  const allItemsInCart = useSelector(state => state.cartReducer.cartItems);
+  const [totalCartPrice, setTotalCartPrice] = useState(0);
+  const [cartID, setCartID] = useState("0");
+  const allItemsInCart = useSelector((state) => state.cartReducer.cartItems);
 
   const getCartItems = useCallback(async () => {
     try {
@@ -29,15 +30,26 @@ const GetLoggedUserCartHook = () => {
 
   useEffect(() => {
     if (!loading && allItemsInCart) {
-      setItemsNumber(allItemsInCart.status === "success" ? allItemsInCart.numOfCartItems : 0);
-      setCartItems(allItemsInCart.status === "success"? allItemsInCart.data.products : []);
-      setTotalCartPrice(allItemsInCart.status === "success"? allItemsInCart.data.totalCartPrice : 0);
+      setItemsNumber(
+        allItemsInCart.status === "success" ? allItemsInCart.numOfCartItems : 0
+      );
+      setCartItems(
+        allItemsInCart.status === "success" ? allItemsInCart.data.products : []
+      );
+      setTotalCartPrice(
+        allItemsInCart.status === "success"
+          ? allItemsInCart.data.totalCartPrice
+          : 0
+      );
+      setCartID(
+        allItemsInCart.status === "success"
+          ? allItemsInCart.data._id
+          : "0"
+      );
     }
   }, [loading, allItemsInCart]);
 
-  
-
-  return [loading, allItemsInCart, itemsNumber, cartItems, totalCartPrice];
+  return [loading, allItemsInCart, itemsNumber, cartItems, totalCartPrice, cartID];
 };
 
 export default GetLoggedUserCartHook;

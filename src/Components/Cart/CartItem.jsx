@@ -1,5 +1,4 @@
 import { Col, Row, Spinner } from "react-bootstrap";
-
 import PropTypes from "prop-types";
 import { webBaseURL } from "../../Api/baseURL";
 import DeleteCartHook from "../../Logic/cart/delete-cart-hook";
@@ -7,11 +6,10 @@ import UpdateCartHook from "../../Logic/cart/update-cart-hook";
 
 const CartItem = ({ item }) => {
   const itemID = item?._id;
-
   const [, , handleDeleteSpecificItemFromCart] = DeleteCartHook(itemID);
-
   const [itemCount, handleChange, updateLoading, applyItemCount] =
     UpdateCartHook(itemID, item);
+
   return (
     <Col xs="12" className="cart-item-body my-3 d-flex px-2 align-items-center">
       <div className="d-flex w-100">
@@ -19,7 +17,12 @@ const CartItem = ({ item }) => {
           <img
             width="100%"
             height="100%"
-            src={`${webBaseURL}/products/${item.product.imageCover}`}
+            src={(() => {
+              if (item?.product?.imageCover.startsWith("http")) {
+                return item?.product?.imageCover;
+              }
+              return `${webBaseURL}/products/${item?.product?.imageCover}`;
+            })()}
             alt="لا يوجد صورة"
           />
         </div>
@@ -27,14 +30,14 @@ const CartItem = ({ item }) => {
           <Row className="justify-content-between">
             <Col
               sm="12"
-              className=" d-flex flex-row justify-content-between align-items-start"
+              className="d-flex flex-row justify-content-between align-items-start"
             >
               <div>
                 <header className="d-inline pt-2 cat-text fs-6">
-                  {item.product.title || "لا يوجد عنوان"}
+                  {item?.product?.title || "لا يوجد عنوان"}
                 </header>
                 <span
-                  className="cat-rate  mt-2 d-flex align-items-center gap-2"
+                  className="cat-rate mt-2 d-flex align-items-center gap-2"
                   aria-label="Rating 4.5"
                   style={{ fontSize: "1rem" }}
                 >
@@ -52,7 +55,7 @@ const CartItem = ({ item }) => {
                     className="d-flex align-items-center"
                     style={{ height: "fit-content", marginTop: "3px" }}
                   >
-                    {item.product.ratingsAverage || 0}
+                    {item?.product?.ratingsAverage || 0}
                   </div>
                 </span>
               </div>
@@ -83,31 +86,31 @@ const CartItem = ({ item }) => {
             <Col sm="12" className="mt-1">
               <div className="cat-text d-inline">التصنيف :</div>
               <div className="barnd-text d-inline mx-1">
-                {item.product.category.name || "لا يوجد تصنيف"}{" "}
+                {item?.product?.category?.name || "لا يوجد تصنيف"}{" "}
               </div>
             </Col>
             <Col sm="12" className="mt-1">
               <div className="cat-text d-inline">الماركة :</div>
               <div className="barnd-text d-inline mx-1">
-                {item.product.brand.name || "لا يوجد ماركة"}{" "}
+                {item?.product?.brand?.name || "لا يوجد ماركة"}{" "}
               </div>
             </Col>
           </Row>
           <Row>
-            {item.color && item.color.length >= 1 ? (
+            {item?.color && item?.color.length >= 1 ? (
               <Col sm="12" className="mt-1 d-flex">
                 <div
                   className="color ms-2 border"
-                  style={{ backgroundColor: item.color }}
+                  style={{ backgroundColor: item?.color }}
                 ></div>
               </Col>
             ) : null}
           </Row>
 
           <Row className="justify-content-between">
-            <Col sm="12" className=" d-flex  flex-row justify-content-between">
+            <Col sm="12" className="d-flex flex-row justify-content-between">
               <div className="d-inline pt-2 d-flex">
-                <div className="cat-text  d-inline">الكميه</div>
+                <div className="cat-text d-inline">الكميه</div>
                 <input
                   value={itemCount}
                   onChange={handleChange}
@@ -128,7 +131,7 @@ const CartItem = ({ item }) => {
                 )}
               </div>
               <div className="d-inline pt-2 barnd-text ps-2">
-                {item.price || 0} جنية
+                {item?.price || 0} جنية
               </div>
             </Col>
           </Row>
@@ -142,4 +145,5 @@ export default CartItem;
 
 CartItem.propTypes = {
   item: PropTypes.object,
+
 };

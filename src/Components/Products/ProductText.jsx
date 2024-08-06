@@ -111,11 +111,13 @@ const ProductText = () => {
             className="product-cart-add px-3 py-3 d-inline mx-3"
             aria-label="Add to cart"
             onClick={handleAddToCart}
+            disabled={items?.quantity === 0}
+            style={{backgroundColor: items?.quantity === 0 ? "red" : ""}}
           >
             {loading ? (
               <Spinner animation="border" variant="primary" />
             ) : (
-              "اضف للعربة"
+              items.quantity === 0 ? "لم يعد متوفر" : "اضف للعربة"
             )}
           </button>
         </Col>
