@@ -1,5 +1,3 @@
-# The Mall
-
 ## Description
 The Mall is a comprehensive e-commerce platform that allows users to buy products online. It features an Admin Dashboard and a User Dashboard, providing full CRUD functionality and a wide range of e-commerce features.
 
