@@ -27,7 +27,7 @@ To get started with this project, follow these steps:
 
 1. **Clone the repository:**
     ```bash
-    git clone https://github.com/your-username/the-mall.git
+    git clone https://github.com/nourmohamed45/huge_e-commerce_frontend.git
     cd the-mall
     ```
 
