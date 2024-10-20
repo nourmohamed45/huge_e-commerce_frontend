@@ -61,10 +61,6 @@ To get started with this project, follow these steps:
 
 2. Open your browser and navigate to `http://localhost:3000` to use the application.
 
-## Screenshots
-![Home Page](./src/assets/homepage-screenshot.png)
-![Admin Dashboard](./src/assets/admin-dashboard-screenshot.png)
-![User Dashboard](./src/assets/user-dashboard-screenshot.png)
 
 ## Contributing
 Developers are welcome to contribute to this project. You can fork the repository from GitHub, make your modifications, and then submit a pull request. I will review your code and merge it if there are no issues.
