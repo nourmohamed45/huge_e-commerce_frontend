@@ -57,21 +57,18 @@ To get started with this project, follow these steps:
     npm run dev
     ```
 
-2. Open your browser and navigate to `http://localhost:3000` to use the application.
+2. Open your browser and navigate to `http://localhost:5173/` to use the application.
 
 
 ## Contributing
 Developers are welcome to contribute to this project. You can fork the repository from GitHub, make your modifications, and then submit a pull request. I will review your code and merge it if there are no issues.
 
-## License
-This project is licensed under the MIT License. You can find more information in the [LICENSE](LICENSE) file.
-
 ## Contact Information
 For any questions or inquiries, please contact me at:
-- **Email:** admin@themall.com
-- **Phone:** (123) 456-7890
+- **Email:** nour.mohamed.elagwany@gmail.com
+- **Phone:** +201019827374
 
-You can also follow me on [LinkedIn](https://www.linkedin.com/).
+You can also follow me on [LinkedIn](https://www.linkedin.com/in/nour-mohamed-935b881b1/ ).
 
 ---
 
