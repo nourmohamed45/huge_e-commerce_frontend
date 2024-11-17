@@ -65,8 +65,7 @@ Developers are welcome to contribute to this project. You can fork the repositor
 
 ## Contact Information
 For any questions or inquiries, please contact me at:
-- **Email:** nour.mohamed.elagwany@gmail.com
-- **Phone:** +201019827374
+- **Email:** nourelagwany45@gmail.com
 
 You can also follow me on [LinkedIn](https://www.linkedin.com/in/nour-mohamed-935b881b1/ ).
 
